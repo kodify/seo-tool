@@ -5,13 +5,16 @@
 - Ruby >= 1.9.3
 - Mysql
 
-## For linux, we might need also to install : libmysql-ruby libmysqlclient-dev
-
 ### Get seo tools working working
 
 ```
 git clone git@github.com:kodify/seo-tool.git
 cd seo-tool
+```
+
+** linux users also will need this:
+```
+sudo apt-get install libmysql-ruby libmysqlclient-dev
 ```
 
 install all dependencies:
