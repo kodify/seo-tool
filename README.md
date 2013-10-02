@@ -1,14 +1,21 @@
 ## Seo-tool
 
-### Requirements
 
-- Ruby >= 1.9.3
-- Mysql
+* To setup using provided VM you'll need to install the latest versions of the following software for your OS
+    * Vagrant: http://downloads.vagrantup.com/
+    * Virtual Box: https://www.virtualbox.org/wiki/Downloads
+
+* Once you have vagrant installed, fork the project to your GitHub account and clone from there to your machine.
+
+    git clone git@github.com:kodify/seo-tool.git
+
+Using the terminal navigate to the directory where you cloned the project and type:
+
+    vagrant up
 
 ### Get seo tools working working
 
 ```
-git clone git@github.com:kodify/seo-tool.git
 cd seo-tool
 ```
 
