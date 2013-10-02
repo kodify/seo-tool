@@ -5,6 +5,7 @@
 - Ruby >= 1.9.3
 - Mysql
 
+## For linux, we might need also to install : libmysql-ruby libmysqlclient-dev
 
 ### Get seo tools working working
 
@@ -34,3 +35,5 @@ now you can access your application on http://localhost:3000
 
 
 ## Thats it! enjoy it
+
+
