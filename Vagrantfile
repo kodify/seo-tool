@@ -14,12 +14,21 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = 'chef/cookbooks'
-    chef.run_list = [
-        "recipe[git]",
-        "recipe[build-essential]",
-        "recipe[ruby_build]",
-        "recipe[rbenv]"
-    ]
+
+    chef.add_recipe "git"
+    chef.add_recipe "build-essential"
+    chef.add_recipe "ruby_build"
+    chef.add_recipe "rbenv"
+    chef.add_recipe "openssl"
+    chef.add_recipe "mysql"
+    chef.add_recipe "mysql::server"
+    chef.json = {
+        "mysql" => {
+          "server_root_password" => "",
+          "server_repl_password" => "",
+          "server_debian_password" => ""
+        }
+    }
 
   end
 end
