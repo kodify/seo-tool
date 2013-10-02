@@ -1,6 +1,5 @@
 ## Seo-tool
 
-
 ### Requirements
 
 - Ruby >= 1.9.3
