@@ -2,7 +2,7 @@
 
 
 * To setup using provided VM you'll need to install the latest versions of the following software for your OS
-    * Vagrant: http://downloads.vagrantup.com/
+    * Vagrant: http://downloads.vagrantup.com/ (>= 1.1)
     * Virtual Box: https://www.virtualbox.org/wiki/Downloads
 
 * Once you have vagrant installed, fork the project to your GitHub account and clone from there to your machine.
