@@ -12,16 +12,12 @@
 Using the terminal navigate to the directory where you cloned the project and type:
 
     vagrant up
+    vagrant ssh
 
 ### Get seo tools working working
 
 ```
-cd seo-tool
-```
-
-** linux users also will need this:
-```
-sudo apt-get install libmysql-ruby libmysqlclient-dev
+cd /var/www/seo-tool/current
 ```
 
 install all dependencies:
