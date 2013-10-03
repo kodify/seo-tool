@@ -12,23 +12,40 @@ Vagrant::Config.run do |config|
 
   config.vm.share_folder "public", "/var/www/seo-tool/current", "."
 
+  #config.vm.provision :shell, :path => "install-rvm.sh",  :args => "stable"
+  #config.vm.provision :shell, :path => "install-ruby.sh", :args => "2.0.0"
+
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = 'chef/cookbooks'
 
     chef.add_recipe "git"
     chef.add_recipe "build-essential"
-    chef.add_recipe "ruby_build"
-    chef.add_recipe "rbenv"
+    chef.add_recipe "nodejs"
     chef.add_recipe "openssl"
     chef.add_recipe "mysql"
     chef.add_recipe "mysql::server"
+
+    chef.add_recipe "rvm::vagrant"
+    chef.add_recipe "rvm::system"
+
     chef.json = {
-        "mysql" => {
-          "server_root_password" => "",
-          "server_repl_password" => "",
-          "server_debian_password" => ""
+      "mysql" => {
+        "server_root_password" => "",
+        "server_repl_password" => "",
+        "server_debian_password" => ""
+      },
+      :rvm => {
+        :rubies => [
+          "2.0.0"
+        ],
+        :default_ruby => "ruby-2.0.0-p247",
+        :user_default_ruby => "ruby-2.0.0-p247",
+        'vagrant' => {
+          'system_chef_solo' => '/usr/bin/chef-solo'
         }
+      }
     }
+
 
   end
 end
