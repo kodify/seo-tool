@@ -1,0 +1,31 @@
+<h1>Listing sites</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Domain</th>
+      <th>Campaignid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sites.each do |site| %>
+      <tr>
+        <td><%= site.code %></td>
+        <td><%= site.domain %></td>
+        <td><%= site.campaignId %></td>
+        <td><%= link_to 'Show', site %></td>
+        <td><%= link_to 'Edit', edit_site_path(site) %></td>
+        <td><%= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Site', new_site_path %>
