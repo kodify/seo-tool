@@ -4,7 +4,7 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    @urls = Url.all
+    @urls = Url.all.page params[:page]
   end
 
   # GET /urls/1
