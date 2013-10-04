@@ -1,12 +1,19 @@
-<h1>Listing sites</h1>
+<div class="page-header">
+  <h1>Listing sites <small> ( <%= link_to 'Create Site', new_site_path %> ) </small></h1>
+</div>
 
-<table>
-  <thead>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li class="active">Sites</li>
+</ol>
+
+<table class='table table-striped table-hover'>
+
+<thead>
     <tr>
       <th>Code</th>
       <th>Domain</th>
       <th>Campaignid</th>
-      <th></th>
       <th></th>
       <th></th>
     </tr>
@@ -18,14 +25,11 @@
         <td><%= site.code %></td>
         <td><%= site.domain %></td>
         <td><%= site.campaignId %></td>
-        <td><%= link_to 'Show', site %></td>
-        <td><%= link_to 'Edit', edit_site_path(site) %></td>
-        <td><%= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td width=30><%= link_to ' ', edit_site_path(site), class: 'glyphicon glyphicon-edit' %></td>
+        <td width=30><%= link_to ' ', site, method: :delete, data: { confirm: 'Are you sure?' }, class: 'glyphicon glyphicon-remove' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Site', new_site_path %>

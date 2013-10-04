@@ -12,3 +12,10 @@
  *= require_tree .
  *= require twitter/bootstrap
  */
+
+.panel-footer {
+    overflow:   auto;
+}
+.panel-footer input, .panel-footer button {
+    margin-left:   5px;
+}

@@ -21,7 +21,7 @@ class SitesControllerTest < ActionController::TestCase
       post :create, site: { campaignId: @site.campaignId, code: @site.code, domain: @site.domain }
     end
 
-    assert_redirected_to site_path(assigns(:site))
+    assert_redirected_to sites_path
   end
 
   test "should show site" do
@@ -36,7 +36,7 @@ class SitesControllerTest < ActionController::TestCase
 
   test "should update site" do
     patch :update, id: @site, site: { campaignId: @site.campaignId, code: @site.code, domain: @site.domain }
-    assert_redirected_to site_path(assigns(:site))
+    assert_redirected_to sites_path
   end
 
   test "should destroy site" do

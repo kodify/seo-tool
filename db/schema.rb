@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131002164704) do
+ActiveRecord::Schema.define(version: 20131004075929) do
+
+  create_table "links", force: true do |t|
+    t.integer  "url_id"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "links", ["url_id"], name: "index_links_on_url_id", using: :btree
 
   create_table "sites", force: true do |t|
     t.string   "code"
@@ -20,5 +29,20 @@ ActiveRecord::Schema.define(version: 20131002164704) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "statuses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "urls", force: true do |t|
+    t.integer  "status_id"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
 
 end
