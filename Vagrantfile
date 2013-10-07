@@ -18,34 +18,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = 'chef/cookbooks'
 
-    chef.add_recipe "git"
-    chef.add_recipe "build-essential"
-    chef.add_recipe "nodejs"
-    chef.add_recipe "openssl"
-    chef.add_recipe "mysql"
-    chef.add_recipe "mysql::server"
-
-    chef.add_recipe "rvm::vagrant"
-    chef.add_recipe "rvm::system"
-
-    chef.json = {
-      "mysql" => {
-        "server_root_password" => "",
-        "server_repl_password" => "",
-        "server_debian_password" => ""
-      },
-      :rvm => {
-        :rubies => [
-          "2.0.0"
-        ],
-        :default_ruby => "ruby-2.0.0-p247",
-        :user_default_ruby => "ruby-2.0.0-p247",
-        'vagrant' => {
-          'system_chef_solo' => '/usr/bin/chef-solo'
-        }
-      }
-    }
-
+    chef.add_recipe "seo-tool"
 
   end
 end
