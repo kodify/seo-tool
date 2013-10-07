@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20131004075929) do
 
   create_table "links", force: true do |t|
     t.integer  "url_id"
+    t.integer  "site_id"
     t.string   "link"
     t.string   "anchor"
     t.string   "status"
@@ -24,6 +25,7 @@ ActiveRecord::Schema.define(version: 20131004075929) do
     t.datetime "updated_at"
   end
 
+  add_index "links", ["site_id"], name: "index_links_on_site_id", using: :btree
   add_index "links", ["url_id"], name: "index_links_on_url_id", using: :btree
 
   create_table "sites", force: true do |t|
