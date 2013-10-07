@@ -3,5 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  http_basic_authenticate_with :name => "admin", :password => "password"
+  before_filter :authenticate
+
+  def authenticate
+    if Rails.env.production?
+      authenticate_or_request_with_http_basic do |username, password|
+        username == "admin" && password == "password"
+      end
+    end
+  end
+
 end
