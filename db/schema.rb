@@ -16,6 +16,10 @@ ActiveRecord::Schema.define(version: 20131004075929) do
   create_table "links", force: true do |t|
     t.integer  "url_id"
     t.string   "link"
+    t.string   "anchor"
+    t.string   "status"
+    t.string   "affiliate"
+    t.string   "campaign"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

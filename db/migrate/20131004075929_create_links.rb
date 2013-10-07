@@ -3,6 +3,10 @@ class CreateLinks < ActiveRecord::Migration
     create_table :links do |t|
       t.references :url, index: true
       t.string :link
+      t.string :anchor
+      t.string :status
+      t.string :affiliate
+      t.string :campaign
 
       t.timestamps
     end
