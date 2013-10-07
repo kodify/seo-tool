@@ -38,6 +38,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+# Logger on heroku
+gem 'rails_12factor', group: :production
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
