@@ -4,12 +4,17 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    @urls = Url.all.page params[:page]
+    if params[:search]
+      @urls = Url.where('url like ?', "%#{params[:search]}%").page params[:page]
+    else
+      @urls = Url.all.page params[:page]
+    end
   end
 
   # GET /urls/1
   # GET /urls/1.json
   def show
+    @sites = Site.all
   end
 
   # GET /urls/new

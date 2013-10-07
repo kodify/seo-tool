@@ -1,5 +1,11 @@
 <div class="page-header">
   <h1>Listing urls <small> ( <%= link_to 'Create Url', new_url_path %> ) </small></h1>
+  <div class='pull-right' style='margin-top:-30px'>
+      <%= form_tag urls_path, method: 'get', class: 'form-inline' do %>
+        <div class="form-group"><%= text_field_tag :search, params[:search], class: 'form-control' %></div>
+        <div class="form-group"><%= submit_tag "Search", :name => nil, class: 'btn' %></div>
+      <% end %>
+  </div>
 </div>
 
 <ol class="breadcrumb">
