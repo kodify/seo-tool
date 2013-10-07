@@ -1,4 +1,4 @@
-[![Build Status](https://magnum.travis-ci.com/kodify/seo-tool.png?token=9qjd4oAq37iG5xvb5hMs&branch=master)](https://travis-ci.org/kodify/seo-tool)
+[![Build Status](https://magnum.travis-ci.com/kodify/seo-tool.png?token=9qjd4oAq37iG5xvb5hMs&branch=master)](https://magnum.travis-ci.com/kodify/seo-tool)
 
 ## Seo-tool
 
