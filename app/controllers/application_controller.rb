@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
         session[:profile]  = user
         url_to_redirect = urls_path
       else
-        flash[:auth_error] = "Seo-tool only allows access to accounts from #{valid_domain} domain."
+        flash[:auth_error] = "Seo-tool only allows access to accounts from #{valid_domains.join(', ')} domain."
       end
     end
     redirect_to url_to_redirect
@@ -70,11 +70,11 @@ class ApplicationController < ActionController::Base
   end
 
   def valid_user?(user)
-    user['email'].split('@').last == valid_domain
+    valid_domains.include? user['email'].split('@').last
   end
 
-  def valid_domain
-    ENV['OAUTH_VALID_DOMAIN']
+  def valid_domains
+    ENV['OAUTH_VALID_DOMAIN'].split(',').map(&:strip)
   end
 
 end
