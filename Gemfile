@@ -33,6 +33,9 @@ gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
 # Pagination
 gem 'kaminari'
 
+# Nokogiri
+gem 'nokogiri'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -44,6 +47,13 @@ gem 'oauth2'
 # Logger on heroku
 gem 'rails_12factor', group: :production
 
+group :development, :test do
+  gem "debugger"
+  gem "rspec"
+  gem "rspec-mocks"
+  gem "rspec-rails"
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -54,4 +64,3 @@ gem 'rails_12factor', group: :production
 # gem 'capistrano', group: :development
 
 # Use debugger
-gem 'debugger', group: [:development, :test]
