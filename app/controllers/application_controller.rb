@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate
   skip_before_filter :authenticate, :only => [:oauth2callback]
 
+  attr_accessor :__auth_client__
+
   def authenticate
     if ['production', 'development'].include? Rails.env
       if session[:profile].nil?
@@ -34,12 +36,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  protected
-
   def auth_client
-    OAuth2::Client.new(client_id, client_secret, { :site           => 'https://accounts.google.com',
-                                                   :authorize_url  => "/o/oauth2/auth",
-                                                   :token_url      => "/o/oauth2/token" })
+    @__auth_client__ ||= OAuth2::Client.new(client_id,
+                                            client_secret,
+                                            { :site           => 'https://accounts.google.com',
+                                              :authorize_url  => "/o/oauth2/auth",
+                                              :token_url      => "/o/oauth2/token" })
   end
 
   def auth_url
