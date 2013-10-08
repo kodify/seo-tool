@@ -37,3 +37,5 @@ config/initializers/secret_token.rb
 .idea
 .vagrant
 *.iml
+config/database.yml
+config/seo-tool.yml
