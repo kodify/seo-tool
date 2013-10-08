@@ -1,0 +1,1 @@
+SEO_TOOL_CONFIG = YAML.load_file("#{Rails.root}/config/seo-tool.yml")[Rails.env]
