@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_uri
-    'http://localhost:3000/oauth2callback'
+    "#{request.base_url}/oauth2callback"
   end
 
   def scope
