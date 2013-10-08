@@ -19,8 +19,12 @@ class CrawlerTest < ActionView::TestCase
     url.expect :links, links
     url.expect :url, 'http://www.example.com'
 
-    crawler = SimpleMock.new Crawler.new
+    real_crawler = Crawler.new
+    crawler = SimpleMock.new real_crawler
+    crawler.expect :sites, [Site.new], nil
     crawler.expect :get_html, content, url
+
+
 
     crawler.process_links url
 
