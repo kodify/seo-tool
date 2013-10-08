@@ -4,13 +4,77 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :authenticate
+  skip_before_filter :authenticate, :only => [:oauth2callback]
 
   def authenticate
-    if Rails.env.production?
-      authenticate_or_request_with_http_basic do |username, password|
-        username == "admin" && password == "password"
+    if ['production', 'development'].include? Rails.env
+      if session[:profile].nil?
+        redirect_to auth_url
       end
     end
+  end
+
+  def oauth2callback
+    url_to_redirect = root_path
+    oauth = auth_client.auth_code.get_token(params[:code], { :redirect_uri => redirect_uri, :token_method => :post })
+    if oauth
+      user = profile(oauth)
+      if valid_user? user
+        session[:profile]  = user
+        url_to_redirect = urls_path
+      else
+        flash[:auth_error] = "Seo-tool only allows access to accounts from #{valid_domain} domain."
+      end
+    end
+    redirect_to url_to_redirect
+  end
+
+  def sign_out
+    session[:profile] = nil
+    redirect_to root_path
+  end
+
+  protected
+
+  def auth_client
+    OAuth2::Client.new(client_id, client_secret, { :site           => 'https://accounts.google.com',
+                                                   :authorize_url  => "/o/oauth2/auth",
+                                                   :token_url      => "/o/oauth2/token" })
+  end
+
+  def auth_url
+    auth_client.auth_code.authorize_url(:scope              => scope,
+                                        :access_type        => 'offline',
+                                        :redirect_uri       => redirect_uri,
+                                        :approval_prompt    => 'force')
+  end
+
+  def profile(oauth)
+    @__profile__ ||= JSON.parse oauth.get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json").body
+  end
+
+  def client_id
+    ENV['OAUTH_ID']
+  end
+
+  def client_secret
+    ENV['OAUTH_SECRET']
+  end
+
+  def redirect_uri
+    'http://localhost:3000/oauth2callback'
+  end
+
+  def scope
+    'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile'
+  end
+
+  def valid_user?(user)
+    user['email'].split('@').last == valid_domain
+  end
+
+  def valid_domain
+    ENV['OAUTH_VALID_DOMAIN']
   end
 
 end
