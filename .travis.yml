@@ -7,6 +7,7 @@ script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
   - bundle exec rake test
+  - bundle exec rspec --format nested
 before_script:
   - cp config/database.yml.tpl config/database.yml
   - RAILS_ENV=test bundle exec rake db:create
