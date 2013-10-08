@@ -34,6 +34,13 @@ rake db:create
 rake db:migrate
 ```
 
+you also will need the next environment vars on your machine:
+```
+OAUTH_ID='google oauth id (the one related with mail)'
+OAUTH_SECRET='google oauth secret'
+OAUTH_VALID_DOMAIN='kodify.io'
+```
+
 now just start the server with:
 ```
 rails s
