@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009094157) do
+ActiveRecord::Schema.define(version: 20131009113005) do
 
   create_table "links", force: true do |t|
     t.integer  "url_id"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 20131009094157) do
     t.datetime "updated_at"
   end
 
+  create_table "stats", force: true do |t|
+    t.integer  "site_id"
+    t.integer  "url_id"
+    t.string   "internal_links"
+    t.string   "external_links"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stats", ["site_id"], name: "index_stats_on_site_id", using: :btree
+  add_index "stats", ["url_id"], name: "index_stats_on_url_id", using: :btree
+
   create_table "statuses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -43,12 +55,13 @@ ActiveRecord::Schema.define(version: 20131009094157) do
   end
 
   create_table "urls", force: true do |t|
-    t.integer   "status_id"
-    t.string    "url"
-    t.timestamp "created_at",                 null: false
-    t.datetime  "updated_at"
-    t.integer   "internal_links", default: 0
-    t.integer   "external_links", default: 0
+    t.integer  "status_id"
+    t.string   "url"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "internal_links"
+    t.integer  "external_links"
+    t.datetime "visited_at"
   end
 
   add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  site_id: 
+  url_id: 
+  internal_links: MyString
+  external_links: MyString
+
+two:
+  site_id: 
+  url_id: 
+  internal_links: MyString
+  external_links: MyString

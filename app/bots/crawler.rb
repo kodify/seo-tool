@@ -10,7 +10,7 @@ class Crawler
       page_links_to_site(page, site).each do |link|
         save_link(url, site, link)
       end
-      save_page_metrics(page, url)
+      save_page_metrics(page, url, site)
     end
   end
 
@@ -67,7 +67,7 @@ class Crawler
   ##
   # Get site metrics
   #
-  def save_page_metrics(page, url)
+  def save_page_metrics(page, url, site)
     page_domain = url_domain url.url
 
     metrics = { internal_links: 0, external_links: 0 }
@@ -79,11 +79,29 @@ class Crawler
       end
     end
 
+    save_url_metrics url, metrics
+    save_url_stats site, url, metrics
+  end
+
+  def save_url_metrics(url, metrics)
     url.internal_links = metrics[:internal_links]
     url.external_links = metrics[:external_links]
+    url.visited_at = Time.now
     url.save
   end
 
+  def save_url_stats(site, url, metrics)
+    stat                = new_stat
+    stat.site           = site
+    stat.url            = url
+    stat.internal_links = metrics[:internal_links]
+    stat.external_links = metrics[:external_links]
+    stat.save
+  end
+
+  def new_stat
+    Stat.new
+  end
 
   def url_domain(url)
     url = "http://#{url}" if URI.parse(url).scheme.nil?
