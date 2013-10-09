@@ -1,63 +1,51 @@
 require 'spec_helper'
 
 describe Crawler do
-  describe 'process_links' do
+  describe '#process_links' do
 
-    let!(:url) { double('url', links: links, url: 'http://www.google.com') }
-    let!(:links) { double('links', update_all: true) }
-    let!(:fakeDomain) { 'domain/blabla' }
-    let!(:page) { double('page') }
-
-
-    it 'should update all the links status to not found' do
-      links.should_receive(:update_all).with(status: 'link not found')
-      subject.stub(:get_html).and_return('html')
-      subject.stub(:sites).and_return([])
-      subject.process_links(url)
-      subject.should have_received(:get_html).with(url)
+    let!(:links)        { double('links', update_all: true) }
+    let!(:fake_domain)  { 'domain/blabla' }
+    let!(:page)         { double('page', css: [ link ]) }
+    let!(:site)         { double('site', domain: 'domain', campaignId: nil )}
+    let!(:children)     { 'anchor' }
+    let!(:link)         { double('link', attribute: fake_domain, children: children) }
+    let!(:sites)        { [site] }
+    let!(:url) do
+      double('url', links: links, url: 'http://www.google.com', "internal_links=" => nil, 'external_links=' => nil,
+             'save' => true)
+    end
+    let!(:db_link) do
+      double('Link', 'site=' => '', 'url=' => '', 'link=' => '', 'anchor=' => '', 'status=' => '',
+             'campaign=' => '', 'affiliate=' => '', 'save' => '')
     end
 
-    it 'should save all the links data' do
-      sites = [site]
+
+    before :each do
       subject.stub(:sites).and_return(sites)
       subject.stub(:get_html).and_return(page)
-      link = linkDef(fakeDomain)
-      page.should_receive(:css).with('a').and_return([link])
-      Link = double('linkGeneral')
-      Link.should_receive(:where).with({:link => fakeDomain, :url => url, :site => site}).and_return([])
-      Link.should_receive(:new).and_return(dbLink)
+      subject.stub(:existing_link).and_return(nil)
+      subject.stub(:new_link).and_return(db_link)
+
       subject.process_links(url)
     end
 
-    def site
-      if @site.nil?
-        @site = double('site')
-        @site.should_receive(:domain).and_return('domain')
-        @site.should_receive(:campaignId).and_return(nil)
+    describe 'given a valid url' do
+      it 'should open the remote url' do
+        subject.should have_received(:get_html).with(url)
       end
-      @site
+      it 'should look for all anchors in the page' do
+        page.should have_received(:css).twice.with('a')
+      end
+      it 'should update all the links status to not found' do
+        links.should have_received(:update_all).with(status: 'link not found')
+      end
+      it 'should save all founded links' do
+        db_link.should have_received(:save)
+      end
+      it 'should save metrics on url' do
+        url.should have_received(:save)
+      end
     end
 
-    def linkDef(fakeDomain)
-      link = double('link')
-      link.should_receive(:attribute).with('href').and_return(fakeDomain)
-      link.should_receive(:attribute).with('href').and_return(fakeDomain)
-      link.should_receive(:children).and_return('anchor')
-      link
-    end
-
-    def dbLink
-      dbLink = double(Link)
-      dbLink.should_receive(:site=)
-      dbLink.should_receive(:url=)
-      dbLink.should_receive(:link=)
-      dbLink.should_receive(:anchor=)
-      dbLink.should_receive(:status=).with('link found')
-      dbLink.should_receive(:campaign).and_return(nil)
-      dbLink.should_receive(:campaign=).with(nil)
-      dbLink.should_receive(:affiliate=)
-      dbLink.should_receive(:save).and_return(true)
-      dbLink
-    end
   end
 end
