@@ -43,12 +43,12 @@ ActiveRecord::Schema.define(version: 20131009094157) do
   end
 
   create_table "urls", force: true do |t|
-    t.integer  "status_id"
-    t.string   "url"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "internal_links"
-    t.integer  "external_links"
+    t.integer   "status_id"
+    t.string    "url"
+    t.timestamp "created_at",                 null: false
+    t.datetime  "updated_at"
+    t.integer   "internal_links", default: 0
+    t.integer   "external_links", default: 0
   end
 
   add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
