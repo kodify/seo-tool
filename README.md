@@ -1,4 +1,5 @@
 [![Build Status](https://magnum.travis-ci.com/kodify/seo-tool.png?token=9qjd4oAq37iG5xvb5hMs&branch=master)](https://magnum.travis-ci.com/kodify/seo-tool)
+[![Code Climate](https://codeclimate.com/github/kodify/seo-tool.png)](https://codeclimate.com/github/kodify/seo-tool)
 
 ## Seo-tool
 
