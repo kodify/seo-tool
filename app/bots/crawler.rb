@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'Resolv'
+require 'socket'
 
 class Crawler
   include ActionView::Helpers::SanitizeHelper
@@ -88,7 +88,7 @@ class Crawler
     if url.visited_at == nil
       url_subdomain       = url_domain url.url
       url.subdomain       = url_subdomain
-      url.ip              = Resolv.getaddress url_subdomain
+      url.ip              = IPSocket::getaddress url_subdomain
       url.domain          = url_subdomain.split('.').last(2).join('.')
     end
     url.internal_links  = metrics[:internal_links]
