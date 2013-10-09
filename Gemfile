@@ -49,9 +49,13 @@ gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem "debugger"
+end
+
+group :test do
   gem "rspec"
   gem "rspec-mocks"
   gem "rspec-rails"
+  gem "shoulda-matchers", github: "thoughtbot/shoulda-matchers" , branch: 'master'
 end
 
 # Use ActiveModel has_secure_password
