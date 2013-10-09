@@ -20,22 +20,34 @@
   <div class="col-md-4">
     <table class='table table-hover'>
       <tbody>
-      <tr>
-        <td>Last visit:</td>
-        <td><strong><%= @url.visited_at or 'Never' %></strong></td>
-      </tr>
-      <tr>
-        <td>Status:</td>
-        <td><strong><%= @url.status %></strong></td>
-      </tr>
-      <tr>
-        <td>Internal links:</td>
-        <td><strong><%= @url.internal_links %></strong></td>
-      </tr>
-      <tr>
-        <td>External links:</td>
-        <td><strong><%= @url.external_links %></strong></td>
-      </tr>
+          <tr>
+            <td>Last visit:</td>
+            <td><strong><%= @url.visited_at or 'Never' %></strong></td>
+          </tr>
+          <tr>
+            <td>Status:</td>
+            <td><strong><%= @url.status %></strong></td>
+          </tr>
+          <tr>
+            <td>Internal links:</td>
+            <td><strong><%= @url.internal_links %></strong></td>
+          </tr>
+          <tr>
+            <td>External links:</td>
+            <td><strong><%= @url.external_links %></strong></td>
+          </tr>
+          <tr>
+            <td>IP:</td>
+            <td><strong><%= @url.ip %></strong></td>
+          </tr>
+          <tr>
+            <td>Domain:</td>
+            <td><strong><%= @url.domain %></strong></td>
+          </tr>
+          <tr>
+            <td>Sub-Domain:</td>
+            <td><strong><%= @url.subdomain %></strong></td>
+          </tr>
       </tbody>
     </table>
   </div>
