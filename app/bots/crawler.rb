@@ -18,18 +18,27 @@ class Crawler
   def save_link(url, site, link)
     link_path = link.attribute('href').to_s
 
-    db_link = Link.where(link: link_path, url: url, site: site).first || Link.new
+    cmp = campaign link_path, site.campaignId
+
+    db_link = existing_link(link_path, url, site) || new_link
     db_link.site       = site
     db_link.url        = url
     db_link.link       = link_path
     db_link.anchor     = link.children.to_s
     db_link.status     = 'link found'
-    db_link.campaign   = campaign link_path, site.campaignId
-    db_link.affiliate  = affiliate? db_link.campaign
+    db_link.campaign   = cmp
+    db_link.affiliate  = affiliate? cmp
 
     db_link.save
   end
 
+  def existing_link(link_path, url, site)
+    Link.where(link: link_path, url: url, site: site).first
+  end
+
+  def new_link
+    Link.new
+  end
 
   ##
   # Get page for a given url
