@@ -5,8 +5,6 @@ class Crawler
   def process_links(url)
     set_url_links_as_not_found url
     page = get_html url
-    debugger
-
     sites.each do |site|
       page_links_to_site(page, site).each do |link|
         save_link(url, site, link)
@@ -17,10 +15,6 @@ class Crawler
 
   protected
 
-
-  ##
-  #
-  #
   def save_link(url, site, link)
     link_path = link.attribute('href').to_s
 
