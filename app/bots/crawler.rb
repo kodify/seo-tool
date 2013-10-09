@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'Resolv'
 
 class Crawler
   include ActionView::Helpers::SanitizeHelper
@@ -79,14 +80,20 @@ class Crawler
       end
     end
 
-    save_url_metrics url, metrics
+    update_url url, metrics
     save_url_stats site, url, metrics
   end
 
-  def save_url_metrics(url, metrics)
-    url.internal_links = metrics[:internal_links]
-    url.external_links = metrics[:external_links]
-    url.visited_at = Time.now
+  def update_url(url, metrics)
+    if url.visited_at == nil
+      url_subdomain       = url_domain url.url
+      url.subdomain       = url_subdomain
+      url.ip              = Resolv.getaddress url_subdomain
+      url.domain          = url_subdomain.split('.').last(2).join('.')
+    end
+    url.internal_links  = metrics[:internal_links]
+    url.external_links  = metrics[:external_links]
+    url.visited_at      = Time.now
     url.save
   end
 
