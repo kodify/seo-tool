@@ -91,12 +91,16 @@ class Crawler
   end
 
   def save_url_stats(site, url, metrics)
-    stat = Stat.new
-    stat.site = site
-    stat.url = url
+    stat                = new_stat
+    stat.site           = site
+    stat.url            = url
     stat.internal_links = metrics[:internal_links]
     stat.external_links = metrics[:external_links]
     stat.save
+  end
+
+  def new_stat
+    Stat.new
   end
 
   def url_domain(url)
