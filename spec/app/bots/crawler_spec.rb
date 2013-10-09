@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Crawler do
   describe '#process_links' do
 
-    let!(:url)          { double('url', links: links, url: 'http://www.google.com') }
     let!(:links)        { double('links', update_all: true) }
     let!(:fake_domain)  { 'domain/blabla' }
     let!(:page)         { double('page', css: [ link ]) }
@@ -11,6 +10,10 @@ describe Crawler do
     let!(:children)     { 'anchor' }
     let!(:link)         { double('link', attribute: fake_domain, children: children) }
     let!(:sites)        { [site] }
+    let!(:url) do
+      double('url', links: links, url: 'http://www.google.com', "internal_links=" => nil, 'external_links=' => nil,
+             'save' => true)
+    end
     let!(:db_link) do
       double('Link', 'site=' => '', 'url=' => '', 'link=' => '', 'anchor=' => '', 'status=' => '',
              'campaign=' => '', 'affiliate=' => '', 'save' => '')
@@ -31,13 +34,16 @@ describe Crawler do
         subject.should have_received(:get_html).with(url)
       end
       it 'should look for all anchors in the page' do
-        page.should have_received(:css).with('a')
+        page.should have_received(:css).twice.with('a')
       end
       it 'should update all the links status to not found' do
         links.should have_received(:update_all).with(status: 'link not found')
       end
       it 'should save all founded links' do
         db_link.should have_received(:save)
+      end
+      it 'should save metrics on url' do
+        url.should have_received(:save)
       end
     end
 
