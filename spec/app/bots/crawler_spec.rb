@@ -12,11 +12,14 @@ describe Crawler do
     let!(:sites)        { [site] }
     let!(:url) do
       double('url', links: links, url: 'http://www.google.com', "internal_links=" => nil, 'external_links=' => nil,
-             'save' => true)
+             'save' => true, 'visited_at=' => nil)
     end
     let!(:db_link) do
       double('Link', 'site=' => '', 'url=' => '', 'link=' => '', 'anchor=' => '', 'status=' => '',
              'campaign=' => '', 'affiliate=' => '', 'save' => '')
+    end
+    let!(:stat) do
+      double('stat', 'site=' => '', 'url=' => '', 'internal_links=' => '', 'external_links=' => '', 'save' => '')
     end
 
 
@@ -25,6 +28,7 @@ describe Crawler do
       subject.stub(:get_html).and_return(page)
       subject.stub(:existing_link).and_return(nil)
       subject.stub(:new_link).and_return(db_link)
+      subject.stub(:new_stat).and_return(stat)
 
       subject.process_links(url)
     end
@@ -44,6 +48,9 @@ describe Crawler do
       end
       it 'should save metrics on url' do
         url.should have_received(:save)
+      end
+      it 'should save statistics on url' do
+        stat.should have_received(:save)
       end
     end
 
