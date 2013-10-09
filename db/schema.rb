@@ -14,13 +14,13 @@
 ActiveRecord::Schema.define(version: 20131009160511) do
 
   create_table "links", force: true do |t|
-    t.integer  "url_id"
-    t.integer  "site_id"
-    t.string   "link"
-    t.string   "anchor"
-    t.string   "status"
-    t.string   "affiliate"
-    t.string   "campaign"
+    t.integer "url_id"
+    t.integer "site_id"
+    t.string "link"
+    t.string "anchor"
+    t.string "status"
+    t.string "affiliate"
+    t.string "campaign"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -29,18 +29,18 @@ ActiveRecord::Schema.define(version: 20131009160511) do
   add_index "links", ["url_id"], name: "index_links_on_url_id", using: :btree
 
   create_table "sites", force: true do |t|
-    t.string   "code"
-    t.string   "domain"
-    t.string   "campaignId"
+    t.string "code"
+    t.string "domain"
+    t.string "campaignId"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "stats", force: true do |t|
-    t.integer  "site_id"
-    t.integer  "url_id"
-    t.string   "internal_links"
-    t.string   "external_links"
+    t.integer "site_id"
+    t.integer "url_id"
+    t.string "internal_links"
+    t.string "external_links"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,25 +49,26 @@ ActiveRecord::Schema.define(version: 20131009160511) do
   add_index "stats", ["url_id"], name: "index_stats_on_url_id", using: :btree
 
   create_table "statuses", force: true do |t|
-    t.string   "name"
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "urls", force: true do |t|
-    t.integer   "status_id"
-    t.string    "url"
-    t.timestamp "created_at",                   null: false
-    t.datetime  "updated_at"
-    t.integer   "internal_links",   default: 0
-    t.integer   "external_links",   default: 0
-    t.datetime  "visited_at"
-    t.string    "ip"
-    t.string    "domain"
-    t.string    "subdomain"
-    t.string    "domain_authority"
-    t.string    "page_authority"
-    t.string    "source"
+    t.integer "status_id"
+    t.string "url"
+    t.integer "internal_links", default: 0
+    t.integer "external_links", default: 0
+    t.string "ip"
+    t.string "domain"
+    t.string "subdomain"
+    t.string "domain_authority"
+    t.string "page_authority"
+    t.string "source"
+    t.datetime "visited_at"
+    t.timestamp "created_at", null: false
+    t.datetime "updated_at"
+    t.datetime "last_access"
   end
 
   add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
