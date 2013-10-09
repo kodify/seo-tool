@@ -81,6 +81,7 @@ class Crawler
 
     url.internal_links = metrics[:internal_links]
     url.external_links = metrics[:external_links]
+    url.visited_at = Time.now
     url.save
   end
 

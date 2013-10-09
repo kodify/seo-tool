@@ -10,16 +10,35 @@
   <li class="active">View: <%= @url.url %></li>
 </ol>
 
-<div class='container' style='margin:0px; padding:0px'>
-  <div class='pull-left'>
-    <h4><small>Status: </small> <%= @url.status %></h4>
-    <h4><small>Internal links: </small> <%= @url.internal_links %></h4>
-    <h4><small>External links: </small> <%= @url.external_links %></h4>
+<div class='row' style='margin:0px; padding:0px'>
+  <div class='pull-left' style='padding-top:25px; padding-bottom:25px'>
+    <table class='table table-hover'>
+      <tbody>
+          <tr>
+              <td>Last visit:</td>
+              <td><strong><%= @url.visited_at or 'Never' %></strong></td>
+          </tr>
+          <tr>
+            <td>Status:</td>
+            <td><strong><%= @url.status %></strong></td>
+          </tr>
+          <tr>
+            <td>Internal links:</td>
+            <td><strong><%= @url.internal_links %></strong></td>
+          </tr>
+          <tr>
+            <td>External links:</td>
+            <td><strong><%= @url.external_links %></strong></td>
+          </tr>
+      </tbody>
+    </table>
   </div>
 
+  <% if @url.internal_links > 0 && @url.external_links > 0 %>
   <div class='pull-right'>
     <div id="donutchart" style="width: 500px; height: 250px;"></div>
   </div>
+  <% end %>
 </div>
 
 
@@ -31,12 +50,12 @@
         <table class='table table-striped table-hover'>
           <thead>
           <tr>
-            <td>Url</td>
-            <td>Anchor</td>
-            <td>Status</td>
-            <td>Affiliate</td>
-            <td align='center'>Campaign</td>
-            <td align='right' width=200>Last update</td>
+            <th>Url</th>
+            <th>Anchor</th>
+            <th>Status</th>
+            <th>Affiliate</th>
+            <th align='center'>Campaign</th>
+            <th align='right' width=200>Last update</th>
           </tr>
           </thead>
           <tbody>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009094157) do
+ActiveRecord::Schema.define(version: 20131009105515) do
 
   create_table "links", force: true do |t|
     t.integer  "url_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20131009094157) do
     t.datetime  "updated_at"
     t.integer   "internal_links", default: 0
     t.integer   "external_links", default: 0
+    t.datetime  "visited_at"
   end
 
   add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree

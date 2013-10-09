@@ -17,7 +17,8 @@
   <thead>
     <tr>
       <th>Url</th>
-      <th>Status</th>
+      <th width=230>Last Visit</th>
+      <th width=100>Status</th>
       <th></th>
       <th></th>
       <th></th>
@@ -28,6 +29,7 @@
     <% @urls.each do |url| %>
       <tr>
         <td><%= url.url %></td>
+        <td><%= url.visited_at or 'Never' %></td>
         <td><%= url.status %></td>
         <td width=30><%= link_to ' ', url, class: 'glyphicon glyphicon-eye-open' %></td>
         <td width=30><%= link_to ' ', edit_url_path(url), class: 'glyphicon glyphicon-edit' %></td>
