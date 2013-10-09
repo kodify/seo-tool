@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20131008203203) do
     t.integer   "status_id"
     t.string    "url"
     t.timestamp "created_at", null: false
-    t.timestamp "updated_at", null: false
+    t.datetime  "updated_at"
   end
 
   add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
