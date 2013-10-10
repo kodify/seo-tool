@@ -4,8 +4,10 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    if params[:search]
-      @urls = Url.where('url like ?', "%#{params[:search]}%").page params[:page]
+
+    search_term = params[:search].to_s.strip
+    if search_term
+      @urls = Url.where('url like ?', "%#{search_term}%").page params[:page]
     else
       @urls = Url.all.page params[:page]
     end
@@ -67,13 +69,13 @@ class UrlsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_url
-      @url = Url.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_url
+    @url = Url.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def url_params
-      params.require(:url).permit(:status_id, :url)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def url_params
+    params.require(:url).permit(:status_id, :url)
+  end
 end
