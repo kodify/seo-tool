@@ -48,14 +48,16 @@ gem 'oauth2'
 gem 'rails_12factor', group: :production
 
 group :development, :test do
-  gem "debugger"
+  gem 'debugger'
 end
 
 group :test do
-  gem "rspec"
-  gem "rspec-mocks"
-  gem "rspec-rails"
-  gem "shoulda-matchers", github: "thoughtbot/shoulda-matchers" , branch: 'master'
+  gem 'rspec'
+  gem 'rspec-mocks'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers' , branch: 'master'
+  gem 'factory_girl'
+  gem 'factory_girl_rails', '4.2.1'
 end
 
 # Use ActiveModel has_secure_password

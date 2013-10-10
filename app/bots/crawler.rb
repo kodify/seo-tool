@@ -22,7 +22,7 @@ class Crawler
   def save_link(url, site, link)
     link_path = link.attribute('href').to_s
 
-    cmp = campaign link_path, site.campaignId
+    cmp = campaign link_path, site.campaign_id
 
     db_link = existing_link(link_path, url, site) || new_link
     db_link.site       = site
