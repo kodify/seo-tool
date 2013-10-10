@@ -24,7 +24,7 @@ class CrawlerCron
   end
 
   def batch_size(amount)
-    [amount, Url.count].min
+    min = [amount.to_i, Url.count].min
   end
 
   def say_unable_to_treat_url(url)
