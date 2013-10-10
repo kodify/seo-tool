@@ -12,7 +12,8 @@ describe Crawler do
     let!(:sites)        { [site] }
     let!(:url) do
       double('url', links: links, url: 'http://www.google.com', "internal_links=" => nil, 'external_links=' => nil,
-             'save' => true, 'visited_at=' => nil, 'ip=' => nil, 'domain=' => nil, 'subdomain=' => nil, visited_at: nil)
+             'save' => true, 'visited_at=' => nil, 'ip=' => nil, 'domain=' => nil, 'subdomain=' => nil,
+             visited_at: nil, 'domain_authority=' => nil, 'page_authority=' => nil)
     end
     let!(:db_link) do
       double('Link', 'site=' => '', 'url=' => '', 'link=' => '', 'anchor=' => '', 'status=' => '',
