@@ -3,9 +3,9 @@
 one:
   code: MyString
   domain: MyString
-  campaignId: MyString
+  campaign_id: MyString
 
 two:
   code: MyString
   domain: MyString
-  campaignId: MyString
+  campaign_id: MyString

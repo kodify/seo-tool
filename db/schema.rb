@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009160511) do
+ActiveRecord::Schema.define(version: 20131010091552) do
 
   create_table "links", force: true do |t|
     t.integer  "url_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20131009160511) do
   create_table "sites", force: true do |t|
     t.string   "code"
     t.string   "domain"
-    t.string   "campaignId"
+    t.string   "campaign_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
