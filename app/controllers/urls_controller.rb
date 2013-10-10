@@ -4,9 +4,10 @@ class UrlsController < ApplicationController
   # GET /urls
   # GET /urls.json
   def index
-    params[:search] ||= ""
-    if params[:search].strip!
-      @urls = Url.where('url like ?', "%#{params[:search]}%").page params[:page]
+
+    search_term = params[:search].to_s.strip
+    if search_term
+      @urls = Url.where('url like ?', "%#{search_term}%").page params[:page]
     else
       @urls = Url.all.page params[:page]
     end
