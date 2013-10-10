@@ -13,7 +13,7 @@ describe CrawlerCron do
       subject.should_receive(:output_to_console).exactly(5).times
     end
     it 'should update the status for all the treated urls' do
-      Url.find(:all, :conditions => {last_access: Date.new(2000, 1, 1)}).size.should eq(5)
+      Url.find(:all, :conditions => {visited_at: Date.new(2000, 1, 1)}).size.should eq(5)
     end
   end
   describe 'cron runs with 5 urls in db and limit 10' do
@@ -27,7 +27,7 @@ describe CrawlerCron do
       subject.should_receive(:output_to_console).exactly(5).times
     end
     it 'should update the status for all the treated urls' do
-      Url.find(:all, :conditions => {last_access: Date.new(2000, 1, 1)}).size.should eq(0)
+      Url.find(:all, :conditions => {visited_at: Date.new(2000, 1, 1)}).size.should eq(0)
     end
 
   end

@@ -4,6 +4,6 @@ FactoryGirl.define do
     sequence(:url) do |n|
       "http://www.google.com?s=#{n}"
     end
-    last_access Date.new(2000, 1, 1)
+    visited_at Date.new(2000, 1, 1)
   end
 end
