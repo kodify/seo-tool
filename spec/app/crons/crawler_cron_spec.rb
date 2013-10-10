@@ -5,6 +5,8 @@ describe CrawlerCron do
 
   before do
     FactoryGirl.create_list :site, 2
+    Url.delete_all
+
     subject.stub(:output_to_console)
   end
   describe 'cron runs with 10 urls in db and limit 5' do
@@ -29,7 +31,6 @@ describe CrawlerCron do
     end
   end
 
-
   describe 'cron runs with 5 urls in db and limit 10' do
     before do
       FactoryGirl.create_list :url, limit
@@ -53,6 +54,7 @@ describe CrawlerCron do
   end
 
   describe 'cron runs without urls in db' do
+    after { subject.treat_urls(limit*2) }
     it 'should not crash' do
       subject.should_receive(:output_to_console).never
     end
@@ -60,11 +62,14 @@ describe CrawlerCron do
 
   describe 'cron runs with wrong urls in db' do
     before do
-      FactoryBirl.create :url, url: 'this_is_not_a_url'
+      FactoryGirl.create :url, url: 'this_is_not_a_url'
+    end
+    after do
+      subject.treat_urls(limit*2)
     end
 
     it 'should leave a message and continue' do
-      subject.should_receive(:output_to_console).with('unable to treat url xxx')
+      subject.should_receive(:output_to_console).with('Unable to treat url this_is_not_a_url')
     end
   end
 

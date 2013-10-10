@@ -1,3 +1,5 @@
+require 'uri'
+
 class CrawlerCron
 
   def treat_urls(amount)
@@ -5,7 +7,12 @@ class CrawlerCron
     Url.transaction do
       Url.order('visited_at DESC').limit(amount).lock(true).each do |url|
         output_to_console "Processing #{url.url}..."
-        crawl.process_links url
+        if url.url =~ URI::regexp
+          crawl.process_links url
+        else
+          output_to_console "Unable to treat url #{url.url}"
+        end
+
       end
     end
   end
