@@ -3,6 +3,7 @@ require 'socket'
 
 class Crawler
   include ActionView::Helpers::SanitizeHelper
+  include SeomozHelper
 
   def process_links(url)
     set_url_links_as_not_found url
@@ -85,12 +86,19 @@ class Crawler
   end
 
   def update_url(url, metrics)
+    if seomoz_configured?
+      authority            = seomoz_batch([ url.url ]).first
+      url.domain_authority = authority['pda']
+      url.page_authority   = authority['upa']
+    end
+
     if url.visited_at == nil
       url_subdomain       = url_domain url.url
-      url.subdomain       = url_subdomain
+      url.subdomain       = url_domain url.url
       url.ip              = IPSocket::getaddress url_subdomain
       url.domain          = url_subdomain.split('.').last(2).join('.')
     end
+
     url.internal_links  = metrics[:internal_links]
     url.external_links  = metrics[:external_links]
     url.visited_at      = Time.now
