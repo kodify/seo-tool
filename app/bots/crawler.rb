@@ -25,13 +25,13 @@ class Crawler
     cmp = campaign link_path, site.campaign_id
 
     db_link = existing_link(link_path, url, site) || new_link
-    db_link.site       = site
-    db_link.url        = url
-    db_link.link       = link_path
-    db_link.anchor     = strip_tags link.children.to_s
-    db_link.status     = 'link found'
-    db_link.campaign   = cmp
-    db_link.affiliate  = affiliate? cmp
+    db_link.site = site
+    db_link.url = url
+    db_link.link = link_path
+    db_link.anchor = strip_tags link.children.to_s
+    db_link.status = 'link found'
+    db_link.campaign = cmp
+    db_link.affiliate = affiliate? cmp
 
     db_link.save
   end
@@ -58,13 +58,12 @@ class Crawler
   def page_links_to_site(page, site)
     links = []
     page.css('a').each do |link|
-      if link.attribute('href').to_s.include? site.domain
+      if are_same_domain(link.attribute('href').to_s, site.domain)
         links << link
       end
     end
     links
   end
-
 
   ##
   # Get site metrics
@@ -72,43 +71,51 @@ class Crawler
   def save_page_metrics(page, url, site)
     page_domain = url_domain url.url
 
-    metrics = { internal_links: 0, external_links: 0 }
+    metrics = {internal_links: 0, external_links: 0}
     page.css('a').each do |link|
-      if link.attribute('href').to_s.include? page_domain
+      link_href = link.attribute('href').to_s
+      if is_internal_link(link_href, page_domain)
         metrics[:internal_links] += 1
       else
         metrics[:external_links] += 1
       end
     end
-
     update_url url, metrics
     save_url_stats site, url, metrics
   end
 
+  def is_internal_link(url, domain)
+    are_same_domain(url, domain) or url.starts_with?('/')
+  end
+
+  def are_same_domain(url, domain)
+    url_domain(url).split('.').last(2).join('.') == domain
+  end
+
   def update_url(url, metrics)
     if seomoz_configured?
-      authority            = seomoz_batch([ url.url ]).first
+      authority = seomoz_batch([url.url]).first
       url.domain_authority = authority['pda']
-      url.page_authority   = authority['upa']
+      url.page_authority = authority['upa']
     end
 
     if url.visited_at == nil
-      url_subdomain       = url_domain url.url
-      url.subdomain       = url_domain url.url
-      url.ip              = IPSocket::getaddress url_subdomain
-      url.domain          = url_subdomain.split('.').last(2).join('.')
+      url_subdomain = url_domain url.url
+      url.subdomain = url_domain url.url
+      url.ip = IPSocket::getaddress url_subdomain
+      url.domain = url_subdomain.split('.').last(2).join('.')
     end
 
-    url.internal_links  = metrics[:internal_links]
-    url.external_links  = metrics[:external_links]
-    url.visited_at      = Time.now
+    url.internal_links = metrics[:internal_links]
+    url.external_links = metrics[:external_links]
+    url.visited_at = Time.now
     url.save
   end
 
   def save_url_stats(site, url, metrics)
-    stat                = new_stat
-    stat.site           = site
-    stat.url            = url
+    stat = new_stat
+    stat.site = site
+    stat.url = url
     stat.internal_links = metrics[:internal_links]
     stat.external_links = metrics[:external_links]
     stat.save
@@ -119,6 +126,7 @@ class Crawler
   end
 
   def url_domain(url)
+    return '' if  url.starts_with?('/')
     url = "http://#{url}" if URI.parse(url).scheme.nil?
     host = URI.parse(url).host.downcase
     host.start_with?('www.') ? host[4..-1] : host
