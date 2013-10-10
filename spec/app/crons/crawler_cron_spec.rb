@@ -6,7 +6,6 @@ describe CrawlerCron do
   before do
     FactoryGirl.create_list :site, 2
     Url.delete_all
-
     subject.stub(:output_to_console)
   end
   describe 'cron runs with 10 urls in db and limit 5' do
@@ -18,7 +17,7 @@ describe CrawlerCron do
         subject.treat_urls(limit)
       end
       it 'should update 5 urls' do
-        subject.should_receive(:output_to_console).exactly(limit).times
+        subject.should_receive(:say_processing_url).exactly(limit).times
       end
     end
     describe 'status is updated' do
@@ -39,8 +38,8 @@ describe CrawlerCron do
       after do
         subject.treat_urls(limit*2)
       end
-      it 'should update 5 urls' do
-        subject.should_receive(:output_to_console).exactly(limit).times
+      it 'updating 5 urls' do
+        subject.should_receive(:say_processing_url).exactly(limit).times
       end
     end
     describe 'status is updated' do
@@ -69,7 +68,7 @@ describe CrawlerCron do
     end
 
     it 'should leave a message and continue' do
-      subject.should_receive(:output_to_console).with('Unable to treat url this_is_not_a_url')
+      subject.should_receive(:say_unable_to_treat_url)
     end
   end
 
