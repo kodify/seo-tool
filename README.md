@@ -50,6 +50,14 @@ rails s
 now you can access your application on http://localhost:3000
 
 
+## Notes
+
+Sometimes there's a permissions problem on the rvm gems folder, to solve it, as this is a development machine, we can do
+```
+sudo chmod 777 -R /usr/local/rvm/gems/
+```
+
+
 ## Thats it! enjoy it
 
 
