@@ -95,8 +95,10 @@ class Crawler
   def update_url(url, metrics)
     if seomoz_configured?
       authority = seomoz_batch([url.url]).first
-      url.domain_authority = authority['pda']
-      url.page_authority = authority['upa']
+      if authority.include?('pda') && authority.include?('upa')
+        url.domain_authority = authority['pda']
+        url.page_authority = authority['upa']
+      end
     end
 
     if url.visited_at == nil
