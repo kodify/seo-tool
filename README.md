@@ -3,6 +3,8 @@
 
 ## Seo-tool
 
+### Set up the environment
+Seo tool is packaged with a development environment on it, you can get this tool runing as is or use the default environment.
 
 * To setup using provided VM you'll need to install the latest versions of the following software for your OS
     * Vagrant: http://downloads.vagrantup.com/ (>= 1.1)
@@ -17,47 +19,29 @@ Using the terminal navigate to the directory where you cloned the project and ty
     vagrant up
     vagrant ssh
 
+
 ### Get seo tool working
+As any other rails application you can get it working easily with:
 
 ```
 cd /var/www/seo-tool/current
-```
-
-install all dependencies:
-```
 bundle install
-```
-
-configure your database access on *config/database.yml*
-and create it with
-```
 rake db:create
 rake db:migrate
+rails s
 ```
 
 you also will need the next environment vars on your machine:
+
 ```
 OAUTH_ID='google oauth id (the one related with mail)'
 OAUTH_SECRET='google oauth secret'
 OAUTH_VALID_DOMAIN='kodify.io'
-export SEOMOZ_ACCESS_ID='Seomoz access id'
-export SEOMOZ_SECRET_KEY='Seomozz secret key'
-```
-
-now just start the server with:
-```
-rails s
+SEOMOZ_ACCESS_ID='Seomoz access id'
+SEOMOZ_SECRET_KEY='Seomozz secret key'
 ```
 
 now you can access your application on http://localhost:3000
-
-
-## Notes
-
-Sometimes there's a permissions problem on the rvm gems folder, to solve it, as this is a development machine, we can do
-```
-sudo chmod 777 -R /usr/local/rvm/gems/
-```
 
 
 ## Thats it! enjoy it
