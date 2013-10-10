@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kodify/seo-tool.png)](https://travis-ci.org/kodify/seo-tool)
+[![Build Status](https://travis-ci.org/kodify/seo-tool.png?branch=master)](https://travis-ci.org/kodify/seo-tool)
 [![Code Climate](https://codeclimate.com/github/kodify/seo-tool.png)](https://codeclimate.com/github/kodify/seo-tool)
 
 ## Seo-tool
