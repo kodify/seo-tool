@@ -17,7 +17,7 @@ Using the terminal navigate to the directory where you cloned the project and ty
     vagrant up
     vagrant ssh
 
-### Get seo tools working working
+### Get seo tool working
 
 ```
 cd /var/www/seo-tool/current
@@ -40,6 +40,8 @@ you also will need the next environment vars on your machine:
 OAUTH_ID='google oauth id (the one related with mail)'
 OAUTH_SECRET='google oauth secret'
 OAUTH_VALID_DOMAIN='kodify.io'
+export SEOMOZ_ACCESS_ID='Seomoz access id'
+export SEOMOZ_SECRET_KEY='Seomozz secret key'
 ```
 
 now just start the server with:
