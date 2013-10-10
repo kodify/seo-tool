@@ -6,7 +6,7 @@ describe Crawler do
     let!(:links)        { double('links', update_all: true) }
     let!(:fake_domain)  { 'domain/blabla' }
     let!(:page)         { double('page', css: [ link ]) }
-    let!(:site)         { double('site', domain: 'domain', campaignId: nil )}
+    let!(:site)         { double('site', domain: 'domain', campaign_id: nil )}
     let!(:children)     { 'anchor' }
     let!(:link)         { double('link', attribute: fake_domain, children: children) }
     let!(:sites)        { [site] }

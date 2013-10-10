@@ -6,4 +6,14 @@ FactoryGirl.define do
     end
     visited_at Date.new(2000, 1, 1)
   end
+
+  factory :site do
+    sequence(:code) do |n|
+      "site#{n}"
+    end
+    sequence(:domain) do |n|
+      "www.site#{n}.com"
+    end
+    campaign_id 'cid'
+  end
 end

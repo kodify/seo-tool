@@ -1,43 +1,68 @@
 require 'spec_helper'
 
 describe CrawlerCron do
+  let!(:limit) { 5 }
 
+  before do
+    FactoryGirl.create_list :site, 2
+    subject.stub(:output_to_console)
+  end
   describe 'cron runs with 10 urls in db and limit 5' do
     before do
-      FactoryGirl.create_list :url, 10
+      FactoryGirl.create_list :url, limit*2
     end
-    after do
-      subject.treat_urls(5)
+    describe 'output is done' do
+      after do
+        subject.treat_urls(limit)
+      end
+      it 'should update 5 urls' do
+        subject.should_receive(:output_to_console).exactly(limit).times
+      end
     end
-    it 'should update 5 urls' do
-      subject.should_receive(:output_to_console).exactly(5).times
-    end
-    it 'should update the status for all the treated urls' do
-      Url.find(:all, :conditions => {visited_at: Date.new(2000, 1, 1)}).size.should eq(5)
+    describe 'status is updated' do
+      before do
+        subject.treat_urls(limit)
+      end
+      it 'should update the status for all the treated urls' do
+        Url.where(visited_at: Date.new(2000, 1, 1)).length.should eq(limit)
+      end
     end
   end
+
+
   describe 'cron runs with 5 urls in db and limit 10' do
     before do
-      FactoryGirl.create_list :url, 5
+      FactoryGirl.create_list :url, limit
     end
-    after do
-      subject.treat_urls(10)
+    describe 'output is done' do
+      after do
+        subject.treat_urls(limit*2)
+      end
+      it 'should update 5 urls' do
+        subject.should_receive(:output_to_console).exactly(limit).times
+      end
     end
-    it 'should update 5 urls' do
-      subject.should_receive(:output_to_console).exactly(5).times
+    describe 'status is updated' do
+      before do
+        subject.treat_urls(limit)
+      end
+      it 'should update the status for all the treated urls' do
+        Url.where(visited_at: Date.new(2000, 1, 1)).length.should eq(0)
+      end
     end
-    it 'should update the status for all the treated urls' do
-      Url.find(:all, :conditions => {visited_at: Date.new(2000, 1, 1)}).size.should eq(0)
-    end
-
   end
 
   describe 'cron runs without urls in db' do
     it 'should not crash' do
+      subject.should_receive(:output_to_console).never
     end
   end
 
   describe 'cron runs with wrong urls in db' do
+    before do
+      FactoryBirl.create :url, url: 'this_is_not_a_url'
+    end
+
     it 'should leave a message and continue' do
       subject.should_receive(:output_to_console).with('unable to treat url xxx')
     end
