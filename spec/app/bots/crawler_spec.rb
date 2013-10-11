@@ -23,7 +23,6 @@ describe Crawler do
       double('stat', 'site=' => '', 'url=' => '', 'internal_links=' => '', 'external_links=' => '', 'save' => '')
     end
 
-
     before :each do
       subject.stub(:sites).and_return(sites)
       subject.stub(:get_html).and_return(page)
@@ -44,7 +43,7 @@ describe Crawler do
       it 'should update all the links status to not found' do
         links.should have_received(:update_all).with(status: 'link not found')
       end
-      it 'should save all founded links' do
+      it 'should save all found links' do
         db_link.should have_received(:save)
       end
       it 'should save metrics on url' do
