@@ -1,4 +1,6 @@
 SeoTool::Application.routes.draw do
+  resources :domains
+
   resources :links
 
   resources :urls

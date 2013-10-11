@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131010091552) do
+ActiveRecord::Schema.define(version: 20131011103057) do
+
+  create_table "domains", force: true do |t|
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "links", force: true do |t|
     t.integer  "url_id"
@@ -63,12 +69,14 @@ ActiveRecord::Schema.define(version: 20131010091552) do
     t.integer  "external_links",   default: 0
     t.datetime "visited_at"
     t.string   "ip"
-    t.string   "domain"
     t.string   "subdomain"
     t.string   "domain_authority"
     t.string   "page_authority"
+    t.string   "source"
+    t.integer  "domain_id"
   end
 
+  add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
   add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
 
 end
