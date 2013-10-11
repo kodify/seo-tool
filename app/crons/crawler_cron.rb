@@ -2,7 +2,7 @@ require 'uri'
 
 class CrawlerCron
 
-  def treat_urls(amount)
+  def process(amount)
     batch_size(amount).times do
       Url.transaction do
         url = Url.order('visited_at ASC').first

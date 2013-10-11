@@ -133,7 +133,7 @@ class Crawler
   end
 
   def invalid_url?(url)
-    url.starts_with?('/') or url.empty? or url.starts_with?('#') or url !=~ URI::regexp
+    url.starts_with?('/') or url.empty? or url.starts_with?('#')
   end
 
   ##
