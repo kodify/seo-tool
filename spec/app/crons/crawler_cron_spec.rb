@@ -4,7 +4,6 @@ describe CrawlerCron do
   let!(:limit) { 5 }
 
   before do
-    Net::HTTP::Post.any_instance.stub(:new)
     FactoryGirl.create_list :site, 2
     Url.delete_all
     subject.stub(:output_to_console)

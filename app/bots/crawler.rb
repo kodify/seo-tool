@@ -3,7 +3,6 @@ require 'socket'
 
 class Crawler
   include ActionView::Helpers::SanitizeHelper
-  include SeomozHelper
 
   def process_links(url)
     set_url_links_as_not_found url
@@ -93,14 +92,6 @@ class Crawler
   end
 
   def update_url(url, metrics)
-    if seomoz_configured?
-      authority = seomoz_batch([url.url]).first
-      if authority.include?('pda') && authority.include?('upa')
-        url.domain_authority = authority['pda']
-        url.page_authority = authority['upa']
-      end
-    end
-
     if url.visited_at == nil
       url_subdomain = url_domain url.url
       url.subdomain = url_domain url.url

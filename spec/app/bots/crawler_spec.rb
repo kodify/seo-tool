@@ -25,7 +25,6 @@ describe Crawler do
 
 
     before :each do
-      Net::HTTP::Post.any_instance.stub(:new)
       subject.stub(:sites).and_return(sites)
       subject.stub(:get_html).and_return(page)
       subject.stub(:existing_link).and_return(nil)
