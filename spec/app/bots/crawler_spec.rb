@@ -4,11 +4,11 @@ describe Crawler do
   describe '#process_links' do
 
     let!(:links)        { double('links', update_all: true) }
-    let!(:fake_domain)  { 'domain/blabla' }
+    let!(:fake_domain)  { 'http://www.domain.com/blabla' }
     let!(:page)         { double('page', css: [ link ]) }
-    let!(:site)         { double('site', domain: 'domain', campaign_id: nil )}
+    let!(:site)         { double('site', domain: 'domain.com', campaign_id: nil )}
     let!(:children)     { 'anchor' }
-    let!(:link)         { double('link', attribute: fake_domain, children: children) }
+    let!(:link)         { double('link', attribute: fake_domain, children: children, empty?: false) }
     let!(:sites)        { [site] }
     let!(:url) do
       double('url', links: links, url: 'http://www.google.com', "internal_links=" => nil, 'external_links=' => nil,
