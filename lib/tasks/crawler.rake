@@ -6,4 +6,9 @@ namespace :crawl do
     cron = CrawlerCron.new
     cron.treat_urls(limit)
   end
+
+  desc 'seomoz'
+  task :seomoz => :environment do
+    Seomoz.new.process
+  end
 end
