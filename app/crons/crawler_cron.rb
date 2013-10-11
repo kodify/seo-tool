@@ -3,8 +3,8 @@ require 'uri'
 class CrawlerCron
 
   def treat_urls(amount)
-    Url.transaction do
-      batch_size(amount).times do
+    batch_size(amount).times do
+      Url.transaction do
         url = Url.order('visited_at ASC').first
         treat_existing_url(url)
       end
