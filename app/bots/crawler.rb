@@ -7,6 +7,7 @@ class Crawler
   def process_links(url)
     set_url_links_as_not_found url
     page = get_html url
+    return unless page
     sites.each do |site|
       page_links_to_site(page, site).each do |link|
         save_link(url, site, link)
@@ -47,7 +48,11 @@ class Crawler
   # Get page for a given url
   #
   def get_html(url)
-    Nokogiri::HTML(open(url.url))
+    begin
+      return Nokogiri::HTML(open(url.url))
+    rescue Exception
+      return
+    end
   end
 
 
@@ -120,9 +125,14 @@ class Crawler
 
   def url_domain(url)
     return '' if invalid_url? url
-    url = "http://#{url}" if URI.parse(url).scheme.nil?
-    host = URI.parse(url).host.downcase
-    host.start_with?('www.') ? host[4..-1] : host
+
+    begin
+      url = "http://#{url}" if URI.parse(url).scheme.nil?
+      host = URI.parse(url).host.downcase
+      return host.start_with?('www.') ? host[4..-1] : host
+    rescue Exception
+      return ''
+    end
   end
 
   ##
@@ -133,7 +143,11 @@ class Crawler
   end
 
   def invalid_url?(url)
-    url.starts_with?('/') or url.empty? or url.starts_with?('#')
+    return true if url.empty?
+    return true if url.starts_with?('/') or url.starts_with?('#')
+    return true unless url =~ URI::regexp
+    return true if url.starts_with?('mailto:')
+    return true if url.starts_with?('javascript:')
   end
 
   ##
