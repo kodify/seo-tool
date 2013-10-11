@@ -55,10 +55,10 @@ class Seomoz
   end
 
   def access_id
-    ENV['ACCESS_ID']
+    ENV['SEOMOZ_ACCESS_ID']
   end
   def secret_key
-    ENV['SECRET_KEY']
+    ENV['SEOMOZ_SECRET_KEY']
   end
 
 end
