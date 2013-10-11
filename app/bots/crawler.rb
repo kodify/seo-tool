@@ -93,17 +93,14 @@ class Crawler
   end
 
   def are_same_domain(url, domain)
-    url_domain(url).split('.').last(2).join('.') == domain
+    url_domain(url) == domain
   end
 
   def update_url(url, metrics)
-    if url.visited_at == nil
-      url_subdomain = url_domain url.url
-      url.subdomain = url_domain url.url
-      url.ip = IPSocket::getaddress url_subdomain
-      url.domain = url_subdomain.split('.').last(2).join('.')
-    end
-
+    subdomain = url_domain url.url
+    url.subdomain = subdomain
+    url.ip = IPSocket::getaddress subdomain
+    url.domain = subdomain.split('.').last(2).join('.')
     url.internal_links = metrics[:internal_links]
     url.external_links = metrics[:external_links]
     url.visited_at = Time.now
@@ -128,8 +125,7 @@ class Crawler
 
     begin
       url = "http://#{url}" if URI.parse(url).scheme.nil?
-      host = URI.parse(url).host.downcase
-      return host.start_with?('www.') ? host[4..-1] : host
+      return URI.parse(url).host.downcase
     rescue Exception
       return ''
     end
