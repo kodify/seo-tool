@@ -3,8 +3,7 @@ namespace :crawl do
   task :url => :environment do
     limit = ENV['CRAWL_LIMIT']
     limit = 50 if ENV['CRAWL_LIMIT'].nil?
-    cron = CrawlerCron.new
-    cron.treat_urls(limit)
+    CrawlerCron.new.process(limit)
   end
 
   desc 'seomoz'

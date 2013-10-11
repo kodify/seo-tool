@@ -14,7 +14,7 @@ describe CrawlerCron do
     end
     describe 'output is done' do
       after do
-        subject.treat_urls(limit)
+        subject.process(limit)
       end
       it 'should update 5 urls' do
         subject.should_receive(:say_processing_url).exactly(limit).times
@@ -22,7 +22,7 @@ describe CrawlerCron do
     end
     describe 'status is updated' do
       before do
-        subject.treat_urls(limit)
+        subject.process(limit)
       end
       it 'should update the status for all the treated urls' do
         Url.where(visited_at: Date.new(2000, 1, 1)).length.should eq(limit)
@@ -36,7 +36,7 @@ describe CrawlerCron do
     end
     describe 'output is done' do
       after do
-        subject.treat_urls(limit*2)
+        subject.process(limit*2)
       end
       it 'updating 5 urls' do
         subject.should_receive(:say_processing_url).exactly(limit).times
@@ -44,7 +44,7 @@ describe CrawlerCron do
     end
     describe 'status is updated' do
       before do
-        subject.treat_urls(limit)
+        subject.process(limit)
       end
       it 'should update the status for all the treated urls' do
         Url.where(visited_at: Date.new(2000, 1, 1)).length.should eq(0)
@@ -53,7 +53,7 @@ describe CrawlerCron do
   end
 
   describe 'cron runs without urls in db' do
-    after { subject.treat_urls(limit*2) }
+    after { subject.process(limit*2) }
     it 'should not crash' do
       subject.should_receive(:output_to_console).never
     end
@@ -64,7 +64,7 @@ describe CrawlerCron do
       FactoryGirl.create :url, url: 'this_is_not_a_url'
     end
     after do
-      subject.treat_urls(limit*2)
+      subject.process(limit*2)
     end
 
     it 'should leave a message and continue' do

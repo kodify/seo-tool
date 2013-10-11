@@ -119,9 +119,8 @@ class Crawler
   end
 
   def url_domain(url)
-    return '' if valid_url? url
+    return '' if invalid_url? url
     url = "http://#{url}" if URI.parse(url).scheme.nil?
-    #debugger
     host = URI.parse(url).host.downcase
     host.start_with?('www.') ? host[4..-1] : host
   end
@@ -133,7 +132,7 @@ class Crawler
     Site.all
   end
 
-  def valid_url?(url)
+  def invalid_url?(url)
     url.starts_with?('/') or url.empty? or url.starts_with?('#')
   end
 
