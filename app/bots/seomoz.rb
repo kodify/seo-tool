@@ -25,7 +25,7 @@ class Seomoz
   protected
 
   def urls
-    Url.where("domain_authority = '' OR domain_authority IS NULL").limit(10000)
+    Url.where("domain_authority = '' OR domain_authority IS NULL").limit(500)
   end
 
   def batch(batched_domains)
