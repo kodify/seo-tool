@@ -8,16 +8,19 @@ require 'uri'
 class Seomoz
   def process
     return unless configured?
-    urls.each do |url|
-      puts "Processing #{url.url}"
-      authority = batch([url.url]).first
-      if authority.include?('pda') && authority.include?('upa')
-        url.domain_authority = authority['pda']
-        url.page_authority = authority['upa']
-        url.save
-        puts "\tupdated"
+    urls.each_slice(10) do |url_batch|
+      authority = batch(url_batch)
+      if authority.first.include?('pda')
+        i = 0
+        url_batch.each do |url|
+          url.domain_authority  = authority[i]['pda']
+          url.page_authority    = authority[i]['upa']
+          url.save
+          i += 1
+        end
+        say "\tupdated"
       else
-        puts "\tnot updated: #{authority.to_s}"
+        say "\tnot updated: #{authority.to_s}"
       end
     end
   end
@@ -25,11 +28,16 @@ class Seomoz
   protected
 
   def urls
-    Url.where("domain_authority = '' OR domain_authority IS NULL").limit(500)
+    Url.where("domain_authority = '' OR domain_authority IS NULL").limit(50)
   end
 
   def batch(batched_domains)
-    JSON.parse domain_metrics(batched_domains)
+    domains = []
+    batched_domains.each do |domain|
+      domains << domain.url
+    end
+    say "Processing batch: #{domains}"
+    JSON.parse domain_metrics(domains)
   end
 
   def domain_metrics(batched_domains)
@@ -57,8 +65,12 @@ class Seomoz
   def access_id
     ENV['SEOMOZ_ACCESS_ID']
   end
+
   def secret_key
     ENV['SEOMOZ_SECRET_KEY']
   end
 
+  def say(msg)
+    puts msg
+  end
 end
