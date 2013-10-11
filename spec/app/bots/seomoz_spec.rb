@@ -15,6 +15,7 @@ describe Seomoz do
       subject.stub(:secret_key).and_return( 'aa' )
       subject.stub(:batch).and_return(seomoz_response)
       subject.stub(:urls).and_return([ url ])
+      subject.stub(:say)
 
       subject.process
     end
