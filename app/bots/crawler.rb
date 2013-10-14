@@ -100,7 +100,6 @@ class Crawler
     subdomain = Url.original_domain url.url
     url.subdomain = subdomain
     url.ip = IPSocket::getaddress subdomain
-    url.domain = subdomain.split('.').last(2).join('.')
     url.internal_links = metrics[:internal_links]
     url.external_links = metrics[:external_links]
     url.visited_at = Time.now
