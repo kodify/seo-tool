@@ -73,7 +73,7 @@ class Crawler
   # Get site metrics
   #
   def save_page_metrics(page, url, site)
-    page_domain = url_domain url.url
+    page_domain = Url.original_domain url.url
 
     metrics = {internal_links: 0, external_links: 0}
     page.css('a').each do |link|
@@ -93,14 +93,13 @@ class Crawler
   end
 
   def are_same_domain(url, domain)
-    url_domain(url) == domain
+    Url.original_domain(url) == domain
   end
 
   def update_url(url, metrics)
-    subdomain = url_domain url.url
+    subdomain = Url.original_domain url.url
     url.subdomain = subdomain
     url.ip = IPSocket::getaddress subdomain
-    url.domain = subdomain.split('.').last(2).join('.')
     url.internal_links = metrics[:internal_links]
     url.external_links = metrics[:external_links]
     url.visited_at = Time.now
@@ -120,30 +119,11 @@ class Crawler
     Stat.new
   end
 
-  def url_domain(url)
-    return '' if invalid_url? url
-
-    begin
-      url = "http://#{url}" if URI.parse(url).scheme.nil?
-      return URI.parse(url).host.downcase
-    rescue Exception
-      return ''
-    end
-  end
-
   ##
   # Get all configured sites
   #
   def sites
     Site.all
-  end
-
-  def invalid_url?(url)
-    return true if url.empty?
-    return true if url.starts_with?('/') or url.starts_with?('#')
-    return true unless url =~ URI::regexp
-    return true if url.starts_with?('mailto:')
-    return true if url.starts_with?('javascript:')
   end
 
   ##
