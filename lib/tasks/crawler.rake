@@ -10,4 +10,11 @@ namespace :crawl do
   task :seomoz => :environment do
     Seomoz.new.process
   end
+
+  desc 'domains'
+  task :domains => :environment do
+    limit = ENV['CRAWL_LIMIT']
+    limit = 50 if ENV['CRAWL_LIMIT'].nil?
+    Domains.new.process(limit)
+  end
 end
