@@ -97,7 +97,7 @@ class Crawler
   end
 
   def update_url(url, metrics)
-    subdomain = url_domain url.url
+    subdomain = Url.original_domain url.url
     url.subdomain = subdomain
     url.ip = IPSocket::getaddress subdomain
     url.domain = subdomain.split('.').last(2).join('.')

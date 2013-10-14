@@ -17,6 +17,7 @@ class DomainsController < ApplicationController
   # GET /domains/1
   # GET /domains/1.json
   def show
+    @urls = @domain.urls.page params[:page]
   end
 
   # GET /domains/new
@@ -26,6 +27,18 @@ class DomainsController < ApplicationController
 
   # GET /domains/1/edit
   def edit
+  end
+
+  # GET /domains/1/status
+  def status
+    set_domain
+  end
+
+  # PATCH /domains/1/status
+  def update_urls_status
+    set_domain
+    Url.update_all({:status_id => params[:url][:status_id]}, {:domain_id => @domain.id})
+    redirect_to @domain, notice: 'Domain url\'s successfully updated'
   end
 
   # POST /domains
@@ -79,4 +92,6 @@ class DomainsController < ApplicationController
   def domain_params
     params.require(:domain).permit(:url)
   end
+
+
 end

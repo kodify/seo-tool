@@ -16,15 +16,17 @@
     <thead>
     <tr>
         <th>Url</th>
+        <th>Status</th>
         <th></th>
         <th></th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <% @domain.urls.each do |url| %>
+    <% @urls.each do |url| %>
         <tr>
             <td><%= link_to url.url, url.url %></td>
+            <td><%= url.status %></td>
             <td width=30><%= link_to ' ', url, class: 'glyphicon glyphicon-eye-open' %></td>
             <td width=30><%= link_to ' ', edit_url_path(url), class: 'glyphicon glyphicon-edit' %></td>
             <td width=30><%= link_to ' ', url, method: :delete, data: {confirm: 'Are you sure?'}, class: 'glyphicon glyphicon-remove' %></td>
@@ -33,3 +35,10 @@
     </tbody>
 </table>
 </p>
+
+<div class="panel-footer">
+    <%= link_to "update all urls status", domain_status_path(@domain), class: "btn pull-right btn-primary" %>
+</div>
+
+<%= paginate @urls %>
+

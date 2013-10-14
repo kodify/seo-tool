@@ -22,6 +22,8 @@ SeoTool::Application.routes.draw do
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  get 'domains/:id/status' => 'domains#status', as: :domain_status
+  patch 'domains/:id/status' => 'domains#update_urls_status', as: :domain_update_urls_status
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
