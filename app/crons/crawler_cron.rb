@@ -30,7 +30,9 @@ class CrawlerCron
   end
 
   def say_processing_url(url)
-    output_to_console "Processing #{url}..."
+    if ENV['RAILS_ENV'] != 'production'
+      output_to_console "Processing #{url}..."
+    end
   end
 
   def crawl

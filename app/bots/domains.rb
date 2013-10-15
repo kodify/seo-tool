@@ -10,12 +10,18 @@ class Domains
     return if url.nil?
     original_domain = Url.original_domain(url.url)
     return if original_domain == ''
-    puts "Fetching domain for #{url.url}"
+    say "Fetching domain for #{url.url}"
     existing_domain = Domain.where(:url => original_domain).first
     existing_domain ||= Domain.new :url=> original_domain
     existing_domain.save
     url.domain = existing_domain
     url.save
+  end
+
+  def say(message)
+    if ENV['RAILS_ENV'] != 'production'
+      puts message
+    end
   end
 
 end
