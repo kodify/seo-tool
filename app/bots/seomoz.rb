@@ -6,9 +6,9 @@ require 'net/http'
 require 'uri'
 
 class Seomoz
-  def process
+  def process(limit = 100)
     return unless configured?
-    urls.each_slice(10) do |url_batch|
+    urls(limit).each_slice(10) do |url_batch|
       authority = batch(url_batch)
       if authority.first.include?('pda')
         i = 0
@@ -27,8 +27,8 @@ class Seomoz
 
   protected
 
-  def urls
-    Url.where("domain_authority = '' OR domain_authority IS NULL").limit(50)
+  def urls(limit)
+    Url.where("domain_authority = '' OR domain_authority IS NULL").limit(limit)
   end
 
   def batch(batched_domains)

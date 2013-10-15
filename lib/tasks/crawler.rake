@@ -7,8 +7,9 @@ namespace :crawl do
   end
 
   desc 'seomoz'
-  task :seomoz => :environment do
-    Seomoz.new.process
+  task :seomoz, [:limit] => :environment do |t, args|
+    args.with_defaults(:limit => 100)
+    Seomoz.new.process args[:limit]
   end
 
   desc 'domains'
