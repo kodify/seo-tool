@@ -4,10 +4,8 @@ class CrawlerCron
 
   def process(amount)
     batch_size(amount).times do
-      Url.transaction do
-        url = Url.order('visited_at ASC').first
-        treat_existing_url(url)
-      end
+      url = Url.order('visited_at ASC').first
+      treat_existing_url(url)
     end
   end
 
@@ -32,7 +30,9 @@ class CrawlerCron
   end
 
   def say_processing_url(url)
-    output_to_console "Processing #{url}..."
+    if ENV['RAILS_ENV'] != 'production'
+      output_to_console "Processing #{url}..."
+    end
   end
 
   def crawl

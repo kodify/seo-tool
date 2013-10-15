@@ -9,10 +9,15 @@ class Crawler
     page = get_html url
     return unless page
     sites.each do |site|
-      page_links_to_site(page, site).each do |link|
-        save_link(url, site, link)
+      begin
+        page_links_to_site(page, site).each do |link|
+          save_link(url, site, link)
+        end
+        save_page_metrics(page, url, site)
+      rescue
+        puts "Could not fetch all the links for url: #{url.url}"
       end
-      save_page_metrics(page, url, site)
+
     end
   end
 
@@ -51,6 +56,7 @@ class Crawler
     begin
       return Nokogiri::HTML(open(url.url))
     rescue Exception
+      puts "Could not open url: #{url.url}"
       return
     end
   end
