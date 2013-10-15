@@ -4,10 +4,8 @@ class CrawlerCron
 
   def process(amount)
     batch_size(amount).times do
-      Url.transaction do
-        url = Url.order('visited_at ASC').first
-        treat_existing_url(url)
-      end
+      url = Url.order('visited_at ASC').first
+      treat_existing_url(url)
     end
   end
 
