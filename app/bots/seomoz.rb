@@ -18,7 +18,7 @@ class Seomoz
           url.save
           i += 1
         end
-        say "\tupdated"
+        say_not_in_prod "\tupdated"
       else
         say "\tnot updated: #{authority.to_s}"
       end
@@ -36,7 +36,7 @@ class Seomoz
     batched_domains.each do |domain|
       domains << domain.url
     end
-    say "Processing batch: #{domains}"
+    say_not_in_prod "Processing batch: #{domains}"
     JSON.parse domain_metrics(domains)
   end
 
@@ -68,6 +68,12 @@ class Seomoz
 
   def secret_key
     ENV['SEOMOZ_SECRET_KEY']
+  end
+
+  def say_not_in_prod(msg)
+    if ENV['RAILS_ENV'] != 'production'
+      say msg
+    end
   end
 
   def say(msg)
