@@ -4,6 +4,8 @@ class Url < ActiveRecord::Base
   has_many :links
   has_many :stats
 
+  validates_uniqueness_of :url
+
   paginates_per 50
 
   def self.original_domain(url_string)
