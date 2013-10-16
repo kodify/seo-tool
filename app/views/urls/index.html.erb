@@ -32,7 +32,7 @@
   <tbody>
     <% @urls.each do |url| %>
       <tr>
-        <td><%= url.url %></td>
+        <td><%= link_to url.url, url.url, target: '_blank' %></td>
         <td><%= url.domain_authority.to_i.round(2) %></td>
         <td><%= url.page_authority.to_i.round(2) %></td>
         <td><%= url.internal_links %></td>
