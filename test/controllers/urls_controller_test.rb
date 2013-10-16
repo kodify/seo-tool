@@ -18,7 +18,7 @@ class UrlsControllerTest < ActionController::TestCase
 
   test "should create url" do
     assert_difference('Url.count') do
-      post :create, url: { status_id: @url.status_id, url: @url.url }
+      post :create, url: { status_id: @url.status_id, url: "#{@url.url}#{Url.count}" }
     end
 
     assert_redirected_to url_path(assigns(:url))
@@ -35,7 +35,7 @@ class UrlsControllerTest < ActionController::TestCase
   end
 
   test "should update url" do
-    patch :update, id: @url, url: { status_id: @url.status_id, url: @url.url }
+    patch :update, id: @url, url: { status_id: @url.status_id, url: "#{@url.url}#{Url.count}" }
     assert_redirected_to url_path(assigns(:url))
   end
 
