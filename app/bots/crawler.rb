@@ -9,15 +9,16 @@ class Crawler
     page = get_html url
     return unless page
     sites.each do |site|
-      begin
-        page_links_to_site(page, site).each do |link|
-          save_link(url, site, link)
+      if url.domain.status != 'OK'
+        begin
+          page_links_to_site(page, site).each do |link|
+            save_link(url, site, link)
+          end
+          save_page_metrics(page, url, site)
+        rescue
+          puts "Could not fetch all the links for url: #{url.url}"
         end
-        save_page_metrics(page, url, site)
-      rescue
-        puts "Could not fetch all the links for url: #{url.url}"
       end
-
     end
   end
 
