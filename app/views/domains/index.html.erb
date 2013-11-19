@@ -17,6 +17,7 @@
     <thead>
     <tr>
         <th class="col-md-9">Url</th>
+        <th>Status</th>
         <th>Links</th>
         <th></th>
         <th></th>
@@ -28,6 +29,7 @@
     <% @domains.each do |domain| %>
         <tr>
             <td><%= domain.url %></td>
+            <td><%= domain.status %></td>
             <td><%= domain.links_counter %></td>
             <td width=30><%= link_to ' ', domain, class: 'glyphicon glyphicon-eye-open' %></td>
             <td width=30><%= link_to ' ', edit_domain_path(domain), class: 'glyphicon glyphicon-edit' %></td>

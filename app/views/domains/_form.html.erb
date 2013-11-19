@@ -17,6 +17,11 @@
                 <%= f.label :url %><br>
                 <%= f.text_field :url, class: 'form-control' %>
             </div>
+            <div class="field">
+                <%= f.label :status %><br>
+                <%= collection_select(:url, :status_id, Status.all, :id, :name, {}, { class: 'form-control' }) %>
+            </div>
+
         </div>
         <div class="panel-footer">
             <%= f.submit class: 'btn pull-right btn-primary' %>

@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131110173251) do
+ActiveRecord::Schema.define(version: 20131119183406) do
 
   create_table "domains", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "links_counter"
     t.string   "url"
+    t.integer  "status_id"
   end
 
   add_index "domains", ["links_counter"], name: "index_domains_on_links_counter", using: :btree
+  add_index "domains", ["status_id"], name: "index_domains_on_status_id", using: :btree
   add_index "domains", ["url"], name: "url", unique: true, using: :btree
 
   create_table "links", force: true do |t|
@@ -65,7 +67,6 @@ ActiveRecord::Schema.define(version: 20131110173251) do
   end
 
   create_table "urls", force: true do |t|
-    t.integer  "status_id"
     t.string   "url"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at"
@@ -81,6 +82,5 @@ ActiveRecord::Schema.define(version: 20131110173251) do
   end
 
   add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
-  add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
 
 end

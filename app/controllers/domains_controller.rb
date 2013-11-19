@@ -1,5 +1,5 @@
 class DomainsController < ApplicationController
-  before_action :set_domain, only: [:show, :edit, :update, :destroy]
+  before_action :set_domain, only: [:show, :edit, :update, :destroy, :update_urls_status]
 
   # GET /domains
   # GET /domains.json
@@ -27,18 +27,6 @@ class DomainsController < ApplicationController
 
   # GET /domains/1/edit
   def edit
-  end
-
-  # GET /domains/1/status
-  def status
-    set_domain
-  end
-
-  # PATCH /domains/1/status
-  def update_urls_status
-    set_domain
-    Url.update_all({:status_id => params[:url][:status_id]}, {:domain_id => @domain.id})
-    redirect_to @domain, notice: 'Domain url\'s successfully updated'
   end
 
   # POST /domains

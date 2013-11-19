@@ -22,7 +22,6 @@
       <th class="col-md-1">Int L</th>
       <th class="col-md-1">Ext L</th>
       <th class="col-md-2">Last Visit</th>
-      <th class="col-md-1">Status</th>
       <th></th>
       <th></th>
       <th></th>
@@ -38,7 +37,6 @@
         <td><%= url.internal_links %></td>
         <td><%= url.external_links %></td>
         <td><%= url.visited_at or 'Never' %></td>
-        <td><%= url.status %></td>
         <td width=30><%= link_to ' ', url, class: 'glyphicon glyphicon-eye-open' %></td>
         <td width=30><%= link_to ' ', edit_url_path(url), class: 'glyphicon glyphicon-edit' %></td>
         <td width=30><%= link_to ' ', url, method: :delete, data: { confirm: 'Are you sure?' }, class: 'glyphicon glyphicon-remove' %></td>
