@@ -11,13 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131011103057) do
+ActiveRecord::Schema.define(version: 20131119111727) do
 
   create_table "domains", force: true do |t|
-    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "url"
+    t.integer  "links_counter", default: 0
   end
+
+  add_index "domains", ["links_counter"], name: "index_domains_on_links_counter", using: :btree
+  add_index "domains", ["url"], name: "url", unique: true, using: :btree
 
   create_table "links", force: true do |t|
     t.integer  "url_id"

@@ -1,3 +1,5 @@
+require 'addressable/uri'
+
 class Url < ActiveRecord::Base
   belongs_to :status
   belongs_to :domain
@@ -8,12 +10,23 @@ class Url < ActiveRecord::Base
 
   paginates_per 50
 
-  def self.original_domain(url_string)
+  def self.original_subdomain(url_string)
     return '' if invalid_url? url_string
 
     begin
       url = "http://#{url_string}" if URI.parse(url_string).scheme.nil?
       return URI.parse(url_string).host.downcase
+    rescue Exception
+      return ''
+    end
+  end
+
+  def self.original_domain(url_string)
+    return '' if invalid_url? url_string
+
+    begin
+      url = "http://#{url_string}" if URI.parse(url_string).scheme.nil?
+      return Addressable::URI.parse(url_string).downcase
     rescue Exception
       return ''
     end

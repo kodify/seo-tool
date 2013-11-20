@@ -79,7 +79,7 @@ class Crawler
   # Get site metrics
   #
   def save_page_metrics(page, url, site)
-    page_domain = Url.original_domain url.url
+    page_domain = Url.original_subdomain url.url
 
     metrics = {internal_links: 0, external_links: 0}
     page.css('a').each do |link|
@@ -99,11 +99,11 @@ class Crawler
   end
 
   def are_same_domain(url, domain)
-    Url.original_domain(url) == domain
+    Url.original_subdomain(url) == domain
   end
 
   def update_url(url, metrics)
-    subdomain = Url.original_domain url.url
+    subdomain = Url.original_subdomain url.url
     url.subdomain = subdomain
     url.ip = IPSocket::getaddress subdomain
     url.internal_links = metrics[:internal_links]

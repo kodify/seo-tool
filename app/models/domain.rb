@@ -1,6 +1,7 @@
 class Domain < ActiveRecord::Base
   has_many :urls
 
+  default_scope order('links_counter DESC')
   paginates_per 50
 
   def to_s

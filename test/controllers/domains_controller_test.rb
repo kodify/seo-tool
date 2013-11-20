@@ -18,7 +18,7 @@ class DomainsControllerTest < ActionController::TestCase
 
   test "should create domain" do
     assert_difference('Domain.count') do
-      post :create, domain: { url: @domain.url }
+      post :create, domain: { url: "#{@domain.url}/2" }
     end
 
     assert_redirected_to domain_path(assigns(:domain))
