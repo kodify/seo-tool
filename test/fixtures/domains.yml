@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  status_id:
+  status: one
   url: MyString
 
 two:
-  status_id:
+  status: two
   url: MyString2

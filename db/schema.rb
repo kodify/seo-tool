@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131119183406) do
+ActiveRecord::Schema.define(version: 20131120083821) do
 
   create_table "domains", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "links_counter"
+    t.integer  "links_counter", default: 0
     t.string   "url"
     t.integer  "status_id"
   end
@@ -64,9 +64,11 @@ ActiveRecord::Schema.define(version: 20131119183406) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "style",      default: ""
   end
 
   create_table "urls", force: true do |t|
+    t.integer  "status_id"
     t.string   "url"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at"
@@ -82,5 +84,6 @@ ActiveRecord::Schema.define(version: 20131119183406) do
   end
 
   add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
+  add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
 
 end

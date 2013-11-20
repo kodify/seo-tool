@@ -17,6 +17,7 @@ class DomainsController < ApplicationController
   # GET /domains/1
   # GET /domains/1.json
   def show
+    @statuses = Status.all
     @urls = @domain.urls.page params[:page]
   end
 
@@ -78,7 +79,7 @@ class DomainsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def domain_params
-    params.require(:domain).permit(:url)
+    params.require(:domain).permit(:url, :status_id)
   end
 
 

@@ -7,7 +7,7 @@ class Url < ActiveRecord::Base
 
   paginates_per 50
 
-  def self.original_domain(url_string)
+  def self.original_subdomain(url_string)
     return '' if invalid_url? url_string
 
     begin

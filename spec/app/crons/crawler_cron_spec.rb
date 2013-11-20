@@ -7,6 +7,7 @@ describe CrawlerCron do
     FactoryGirl.create_list :site, 2
     Url.delete_all
     subject.stub(:output_to_console)
+    subject.stub(:process_links)
   end
   describe 'cron runs with 10 urls in db and limit 5' do
     before do

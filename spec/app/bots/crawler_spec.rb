@@ -26,8 +26,8 @@ describe Crawler do
              'domain_authority=' => nil,
              'page_authority=' => nil)
     end
-    let!(:domain) { double('domain', status: status)}
-    let!(:status) { 'OK' }
+    let!(:domain) { double('domain', url: 'google.com', status: status)}
+    let!(:status) { double('status', name: 'noOK') }
     let!(:db_link) do
       double('Link', 'site=' => '', 'url=' => '', 'link=' => '', 'anchor=' => '', 'status=' => '',
              'campaign=' => '', 'affiliate=' => '', 'save' => '')

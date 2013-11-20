@@ -9,7 +9,7 @@ class Crawler
     page = get_html url
     return unless page
     sites.each do |site|
-      if url.domain.status != 'OK'
+      if url.domain.status.name != 'OK'
         begin
           page_links_to_site(page, site).each do |link|
             save_link(url, site, link)
