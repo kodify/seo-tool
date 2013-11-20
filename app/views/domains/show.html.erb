@@ -13,9 +13,11 @@
 
 <p>
 <div class="panel-footer">
+  <% if @domain.status %>
   <div class='pull-left'>
-    <h4><small>Current status :</small> <%= @domain.status.name.capitalize %></h4>
+    <h4><small>Current status :</small> <span class='label <%= @domain.status.style.gsub('btn-', 'label-') %>'><%= @domain.status.name.capitalize %></span></h4>
   </div>
+  <% end %>
   <% @statuses.each do |status| %>
       <%= form_for @domain, :method => "put" do |f| %>
           <%= f.hidden_field :status_id, :value => status.id %>

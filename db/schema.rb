@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 20131120083821) do
   create_table "domains", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "links_counter", default: 0
     t.string   "url"
+    t.integer  "links_counter", default: 0
     t.integer  "status_id"
   end
 
@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(version: 20131120083821) do
     t.integer  "site_id"
     t.string   "link"
     t.string   "anchor"
-    t.string   "status"
-    t.string   "affiliate"
-    t.string   "campaign"
+    t.string   "status",     limit: 25
+    t.string   "affiliate",  limit: 5
+    t.string   "campaign",   limit: 10
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -68,22 +68,22 @@ ActiveRecord::Schema.define(version: 20131120083821) do
   end
 
   create_table "urls", force: true do |t|
-    t.integer  "status_id"
-    t.string   "url"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at"
-    t.integer  "internal_links",   default: 0
-    t.integer  "external_links",   default: 0
-    t.datetime "visited_at"
-    t.string   "ip"
-    t.string   "subdomain"
-    t.string   "domain_authority"
-    t.string   "page_authority"
-    t.string   "source"
-    t.integer  "domain_id"
+    t.string    "url"
+    t.timestamp "created_at",                   null: false
+    t.datetime  "updated_at"
+    t.integer   "internal_links",   default: 0
+    t.integer   "external_links",   default: 0
+    t.datetime  "visited_at"
+    t.string    "ip"
+    t.string    "subdomain"
+    t.string    "domain_authority"
+    t.string    "page_authority"
+    t.string    "source"
+    t.integer   "domain_id"
   end
 
   add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
-  add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
+  add_index "urls", ["url"], name: "idx1", unique: true, using: :btree
+  add_index "urls", ["visited_at"], name: "Visited_at", using: :btree
 
 end

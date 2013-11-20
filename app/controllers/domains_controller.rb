@@ -4,10 +4,15 @@ class DomainsController < ApplicationController
   # GET /domains
   # GET /domains.json
   def index
-
+    @statuses   = Status.all
+    status_id   = params[:status_id].to_s.strip
     search_term = params[:search].to_s.strip
     if search_term
-      @domains = Domain.where('url like ?', "%#{search_term}%").page params[:page]
+      if status_id.empty?
+        @domains = Domain.where('url like ?', "%#{search_term}%").page params[:page]
+      else
+        @domains = Domain.where('url like ? AND status_id = ?', "%#{search_term}%", status_id).page params[:page]
+      end
     else
       @domains = Domain.all.page params[:page]
     end
