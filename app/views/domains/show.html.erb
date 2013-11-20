@@ -9,6 +9,9 @@
     <li><a href="/">Home</a></li>
     <li><%= link_to 'Domains', domains_path %></li>
     <li class="active"><%= @domain %></li>
+    <% if @next_domain %>
+    <li class='pull-right'><a href='<%= url_for domain_url(@next_domain) %>'>Next &rsaquo;</a></li>
+    <% end %>
 </ol>
 
 <p>

@@ -49,6 +49,8 @@ gem 'oauth2'
 # Logger on heroku
 gem 'rails_12factor', group: :production
 
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+
 group :development, :test do
   gem 'debugger'
 end

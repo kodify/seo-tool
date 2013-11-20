@@ -1,27 +1,22 @@
 class DomainsController < ApplicationController
-  before_action :set_domain, only: [:show, :edit, :update, :destroy, :update_urls_status]
+  before_action :set_domain, only: [:show, :next, :edit, :update, :destroy, :update_urls_status]
 
   # GET /domains
   # GET /domains.json
   def index
     @statuses   = Status.all
-    status_id   = params[:status_id].to_s.strip
-    search_term = params[:search].to_s.strip
-    if search_term
-      if status_id.empty?
-        @domains = Domain.where('url like ?', "%#{search_term}%").page params[:page]
-      else
-        @domains = Domain.where('url like ? AND status_id = ?', "%#{search_term}%", status_id).page params[:page]
-      end
-    else
-      @domains = Domain.all.page params[:page]
-    end
+    session[:all_domains] = search_domains(params).pluck(:id)
+    @domains = search_domains(params).page params[:page]
   end
-
 
   # GET /domains/1
   # GET /domains/1.json
   def show
+    @next_domain = nil
+    if session[:all_domains]
+      next_index = session[:all_domains].index(params[:id].to_i).next
+      @next_domain = session[:all_domains][next_index]
+    end
     @statuses = Status.all
     @urls = @domain.urls.page params[:page]
   end
@@ -87,5 +82,20 @@ class DomainsController < ApplicationController
     params.require(:domain).permit(:url, :status_id)
   end
 
+  # Search domains by term and status
+  def search_domains(params)
+    status_id   = params[:status_id].to_s.strip
+    search_term = params[:search].to_s.strip
+
+    if search_term
+      if status_id.empty?
+        Domain.where('url like ?', "%#{search_term}%")
+      else
+        Domain.where('url like ? AND status_id = ?', "%#{search_term}%", status_id)
+      end
+    else
+      Domain.all
+    end
+  end
 
 end

@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/rails/activerecord-session_store.git
+  revision: a0753820f0032dec7c37441be93ffc76b9dce3d0
+  specs:
+    activerecord-session_store (0.1.0)
+      actionpack (>= 4.0.0, < 5)
+      activerecord (>= 4.0.0, < 5)
+      railties (>= 4.0.0, < 5)
+
+GIT
   remote: git://github.com/thoughtbot/shoulda-matchers.git
   revision: f217014b1e788a73dcc79f4d35bed52b02fc4b58
   branch: master
@@ -173,6 +182,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-session_store!
   addressable
   anjlab-bootstrap-rails
   coffee-rails (~> 4.0.0)
