@@ -7,6 +7,8 @@ class Url < ActiveRecord::Base
 
   validates_uniqueness_of :url
 
+  default_scope { order(id: :asc) }
+
   paginates_per 50
 
   def self.original_subdomain(url_string)
