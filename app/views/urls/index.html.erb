@@ -37,9 +37,9 @@
         <td><%= url.internal_links %></td>
         <td><%= url.external_links %></td>
         <td><%= url.visited_at or 'Never' %></td>
-        <td width=30><%= link_to ' ', url, class: 'glyphicon glyphicon-eye-open' %></td>
-        <td width=30><%= link_to ' ', edit_url_path(url), class: 'glyphicon glyphicon-edit' %></td>
-        <td width=30><%= link_to ' ', url, method: :delete, data: { confirm: 'Are you sure?' }, class: 'glyphicon glyphicon-remove' %></td>
+        <td width=30><%= link_to ' ', url, class: 'btn btn-default btn-sm glyphicon glyphicon-eye-open' %></td>
+        <td width=30><%= link_to ' ', edit_url_path(url), class: 'btn btn-default btn-sm glyphicon glyphicon-edit' %></td>
+        <td width=30><%= link_to ' ', url, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm glyphicon glyphicon-remove' %></td>
       </tr>
     <% end %>
   </tbody>

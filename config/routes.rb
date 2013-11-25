@@ -1,4 +1,6 @@
 SeoTool::Application.routes.draw do
+  resources :subnets
+
   resources :domains
 
   resources :links

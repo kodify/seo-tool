@@ -25,8 +25,8 @@
         <td><%= site.code %></td>
         <td><%= site.domain %></td>
         <td><%= site.campaign_id %></td>
-        <td width=30><%= link_to ' ', edit_site_path(site), class: 'glyphicon glyphicon-edit' %></td>
-        <td width=30><%= link_to ' ', site, method: :delete, data: { confirm: 'Are you sure?' }, class: 'glyphicon glyphicon-remove' %></td>
+        <td width=30><%= link_to ' ', edit_site_path(site), class: 'btn btn-default btn-sm glyphicon glyphicon-edit' %></td>
+        <td width=30><%= link_to ' ', site, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm glyphicon glyphicon-remove' %></td>
       </tr>
     <% end %>
   </tbody>

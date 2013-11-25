@@ -20,8 +20,8 @@
     <% @statuses.each do |status| %>
       <tr>
         <td><%= status.name %></td>
-        <td width=30><%= link_to ' ', edit_status_path(status), class: 'glyphicon glyphicon-edit' %></td>
-        <td width=30><%= link_to ' ', status, method: :delete, data: { confirm: 'Are you sure?' }, class: 'glyphicon glyphicon-remove' %></td>
+        <td width=30><%= link_to ' ', edit_status_path(status), class: 'btn btn-default btn-sm glyphicon glyphicon-edit' %></td>
+        <td width=30><%= link_to ' ', status, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm glyphicon glyphicon-remove' %></td>
       </tr>
     <% end %>
   </tbody>
