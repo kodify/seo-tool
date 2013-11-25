@@ -1,3 +1,5 @@
+require 'addressable/uri'
+
 class Url < ActiveRecord::Base
   belongs_to :domain
   has_many :links
@@ -22,8 +24,8 @@ class Url < ActiveRecord::Base
     return '' if invalid_url? url_string
 
     begin
-      url = "http://#{url_string}" if URI.parse(url_string).scheme.nil?
-      return Addressable::URI.parse(url_string).downcase
+      host = Addressable::URI.parse(url_string).host.split('.')
+      return "#{host[-2]}.#{host[-1]}"
     rescue Exception
       return ''
     end

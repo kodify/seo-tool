@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120153537) do
+ActiveRecord::Schema.define(version: 20131125135938) do
 
   create_table "domains", force: true do |t|
     t.datetime "created_at"
@@ -93,5 +93,6 @@ ActiveRecord::Schema.define(version: 20131120153537) do
   end
 
   add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
+  add_index "urls", ["url"], name: "url", unique: true, using: :btree
 
 end
