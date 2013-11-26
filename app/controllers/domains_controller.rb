@@ -90,6 +90,8 @@ class DomainsController < ApplicationController
     if search_term
       if status_id.empty?
         Domain.where('url like ?', "%#{search_term}%")
+      elsif status_id == '--empty--'
+        Domain.where('url like ? AND status_id is NULL', "%#{search_term}%")
       else
         Domain.where('url like ? AND status_id = ?', "%#{search_term}%", status_id)
       end
