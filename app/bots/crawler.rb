@@ -9,6 +9,7 @@ class Crawler
     page = get_html url
     return unless page
     sites.each do |site|
+      next if url.domain && url.domain.status && url.domain.status.name == 'OK'
       begin
         page_links_to_site(page, site).each do |link|
           save_link(url, site, link)
@@ -17,8 +18,8 @@ class Crawler
       rescue
         puts "Could not fetch all the links for url: #{url.url}"
       end
-
     end
+    save_domain_counters url
   end
 
 
@@ -79,7 +80,7 @@ class Crawler
   # Get site metrics
   #
   def save_page_metrics(page, url, site)
-    page_domain = Url.original_domain url.url
+    page_domain = Url.original_subdomain url.url
 
     metrics = {internal_links: 0, external_links: 0}
     page.css('a').each do |link|
@@ -99,11 +100,11 @@ class Crawler
   end
 
   def are_same_domain(url, domain)
-    Url.original_domain(url) == domain
+    Url.original_subdomain(url) == domain
   end
 
   def update_url(url, metrics)
-    subdomain = Url.original_domain url.url
+    subdomain = Url.original_subdomain url.url
     url.subdomain = subdomain
     url.ip = IPSocket::getaddress subdomain
     url.internal_links = metrics[:internal_links]
@@ -156,7 +157,13 @@ class Crawler
   # Updates all url related links to status link not found
   #
   def set_url_links_as_not_found(url)
+    url.domain.links_counter = url.domain.links_counter - url.links.where(status: 'link found').count
     url.links.update_all(status: 'link not found')
+  end
+
+  def save_domain_counters(url)
+    url.domain.links_counter = url.domain.links_counter + url.links.where(status: 'link found').count
+    url.domain.save
   end
 
 end

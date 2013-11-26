@@ -36,6 +36,8 @@ gem 'kaminari'
 # Nokogiri
 gem 'nokogiri'
 
+gem 'addressable'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -46,6 +48,8 @@ gem 'oauth2'
 
 # Logger on heroku
 gem 'rails_12factor', group: :production
+
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 group :development, :test do
   gem 'debugger'

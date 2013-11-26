@@ -1,19 +1,33 @@
+require 'addressable/uri'
+
 class Url < ActiveRecord::Base
-  belongs_to :status
   belongs_to :domain
   has_many :links
   has_many :stats
 
   validates_uniqueness_of :url
 
+  default_scope { order(id: :asc) }
+
   paginates_per 50
 
-  def self.original_domain(url_string)
+  def self.original_subdomain(url_string)
     return '' if invalid_url? url_string
 
     begin
       url = "http://#{url_string}" if URI.parse(url_string).scheme.nil?
       return URI.parse(url_string).host.downcase
+    rescue Exception
+      return ''
+    end
+  end
+
+  def self.original_domain(url_string)
+    return '' if invalid_url? url_string
+
+    begin
+      host = Addressable::URI.parse(url_string).host.split('.')
+      return "#{host[-2]}.#{host[-1]}"
     rescue Exception
       return ''
     end

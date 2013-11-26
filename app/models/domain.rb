@@ -1,16 +1,12 @@
 class Domain < ActiveRecord::Base
+  belongs_to :status
+  belongs_to :subnet
   has_many :urls
 
+  default_scope { order(links_counter: :desc) }
   paginates_per 50
 
   def to_s
     url
-  end
-
-  def status_to_urls(status_id)
-    query = "UPDATE `urls` set status_id=? where domain_id=?"
-    st = connection.raw_connection.prepare(query)
-    st.execute(status_id, object_id)
-    st.close
   end
 end

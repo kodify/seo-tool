@@ -17,6 +17,17 @@
             <%= f.label :name %><br>
             <%= f.text_field :name, class: 'form-control' %>
           </div>
+          <div class="field">
+            <%= f.label :style %><br>
+            <%= f.select(:style, [
+                ['Default', 'btn-default'],
+                ['Primary', 'btn-primary'],
+                ['Success', 'btn-success'],
+                ['Info', 'btn-info'],
+                ['Warning', 'btn-warning'],
+                ['Danger', 'btn-danger'],
+                ['Link', 'btn-link'] ], {}, { :class => 'form-control' }) %>
+          </div>
       </div>
       <div class="panel-footer">
         <%= f.submit class: 'btn pull-right btn-primary' %>

@@ -11,28 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131011103057) do
+ActiveRecord::Schema.define(version: 20131126164334) do
 
   create_table "domains", force: true do |t|
-    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "url"
+    t.integer  "links_counter", default: 0
+    t.integer  "status_id"
+    t.integer  "subnet_id"
   end
+
+  add_index "domains", ["links_counter"], name: "index_domains_on_links_counter", using: :btree
+  add_index "domains", ["status_id"], name: "index_domains_on_status_id", using: :btree
+  add_index "domains", ["subnet_id"], name: "index_domains_on_subnet_id", using: :btree
+  add_index "domains", ["url"], name: "url", unique: true, using: :btree
 
   create_table "links", force: true do |t|
     t.integer  "url_id"
     t.integer  "site_id"
     t.string   "link"
     t.string   "anchor"
-    t.string   "status"
-    t.string   "affiliate"
-    t.string   "campaign"
+    t.string   "status",     limit: 25
+    t.string   "affiliate",  limit: 5
+    t.string   "campaign",   limit: 10
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "links", ["site_id"], name: "index_links_on_site_id", using: :btree
   add_index "links", ["url_id"], name: "index_links_on_url_id", using: :btree
+
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "sites", force: true do |t|
     t.string   "code"
@@ -58,10 +76,18 @@ ActiveRecord::Schema.define(version: 20131011103057) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "style",      default: ""
+  end
+
+  create_table "subnets", force: true do |t|
+    t.string   "ip"
+    t.integer  "urls_count",  default: 0
+    t.integer  "links_count", default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "urls", force: true do |t|
-    t.integer   "status_id"
     t.string    "url"
     t.timestamp "created_at",                   null: false
     t.datetime  "updated_at"
@@ -77,6 +103,8 @@ ActiveRecord::Schema.define(version: 20131011103057) do
   end
 
   add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
-  add_index "urls", ["status_id"], name: "index_urls_on_status_id", using: :btree
+  add_index "urls", ["url"], name: "idx1", unique: true, using: :btree
+  add_index "urls", ["url"], name: "url", unique: true, using: :btree
+  add_index "urls", ["visited_at"], name: "Visited_at", using: :btree
 
 end
