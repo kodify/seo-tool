@@ -19,6 +19,7 @@ class Crawler
         puts "Could not fetch all the links for url: #{url.url}"
       end
     end
+    save_domain_counters url
   end
 
 
@@ -156,7 +157,13 @@ class Crawler
   # Updates all url related links to status link not found
   #
   def set_url_links_as_not_found(url)
+    url.domain.links_counter = url.domain.links_counter - url.links.where(status: 'link found').count
     url.links.update_all(status: 'link not found')
+  end
+
+  def save_domain_counters(url)
+    url.domain.links_counter = url.domain.links_counter + url.links.where(status: 'link found').count
+    url.domain.save
   end
 
 end

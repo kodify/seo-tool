@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Crawler do
   describe '#process_links' do
 
-    let!(:links)        { double('links', update_all: true) }
+    let!(:links)        { double('links', update_all: true, where: links_count) }
+    let!(:links_count)  { double('links_count', count: 10) }
     let!(:fake_domain)  { 'http://www.domain.com/blabla' }
     let!(:page)         { double('page', css: [ link ]) }
     let!(:site)         { double('site', domain: 'www.domain.com', campaign_id: nil )}
@@ -26,7 +27,14 @@ describe Crawler do
              'domain_authority=' => nil,
              'page_authority=' => nil)
     end
-    let!(:domain) { double('domain', url: 'google.com', status: status)}
+    let!(:domain) do
+      double('domain',
+             url: 'google.com',
+             status: status,
+             links_counter: 10,
+             'links_counter='=> 10,
+             save: true)
+    end
     let!(:status) { double('status', name: 'noOK') }
     let!(:db_link) do
       double('Link', 'site=' => '', 'url=' => '', 'link=' => '', 'anchor=' => '', 'status=' => '',

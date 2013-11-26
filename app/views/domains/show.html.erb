@@ -33,6 +33,7 @@
     <thead>
     <tr>
         <th>Url</th>
+        <th width=150>Links</th>
         <th></th>
         <th></th>
         <th></th>
@@ -42,6 +43,7 @@
     <% @urls.each do |url| %>
         <tr>
             <td><%= link_to url.url, url.url %></td>
+            <td><%= url.links.count %></td>
             <td width=30><%= link_to ' ', url, class: 'glyphicon glyphicon-eye-open' %></td>
             <td width=30><%= link_to ' ', edit_url_path(url), class: 'glyphicon glyphicon-edit' %></td>
             <td width=30><%= link_to ' ', url, method: :delete, data: {confirm: 'Are you sure?'}, class: 'glyphicon glyphicon-remove' %></td>
