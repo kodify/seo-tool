@@ -12,7 +12,6 @@
     <tr>
       <th>Ip</th>
       <th class='text-right' width=150>Domains</th>
-      <th class='text-right' width=150>Urls</th>
       <th class='text-right' width=150>Links</th>
       <th width=100></th>
     </tr>
@@ -23,7 +22,6 @@
       <tr>
         <td><%= subnet.ip %></td>
         <td class='text-right'><%= subnet.domains.count %></td>
-        <td class='text-right'><%= subnet.urls_count %></td>
         <td class='text-right'><%= subnet.links_count %></td>
         <td class='text-right'><%= link_to ' ', subnet, class: 'btn btn-default btn-sm glyphicon glyphicon-eye-open' %></td>
       </tr>
