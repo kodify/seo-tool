@@ -8,6 +8,7 @@ class Domains
 
   def save_url_domain(url)
     return if url.nil?
+    return unless url.domain.nil?
     original_domain = Url.original_domain(url.url)
     return if original_domain == ''
     say "Fetching domain for #{url.url}"
@@ -17,6 +18,7 @@ class Domains
     existing_domain.save
     url.domain = existing_domain
     url.save
+    url
   end
 
   def say(message)
