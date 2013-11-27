@@ -11,34 +11,28 @@ class Url < ActiveRecord::Base
 
   paginates_per 50
 
-  def self.original_subdomain(url_string)
-    return '' if invalid_url? url_string
-
-    begin
-      url = "http://#{url_string}" if URI.parse(url_string).scheme.nil?
-      return URI.parse(url_string).host.downcase
-    rescue Exception
-      return ''
-    end
+  def original_subdomain
+    return '' if invalid_url?
+    url = "http://#{self.url}" if URI.parse(self.url).scheme.nil?
+    return URI.parse(self.url).host.downcase
+  rescue Exception
+    return ''
   end
 
-  def self.original_domain(url_string)
-    return '' if invalid_url? url_string
-
-    begin
-      host = Addressable::URI.parse(url_string).host.split('.')
-      return "#{host[-2]}.#{host[-1]}"
-    rescue Exception
-      return ''
-    end
+  def original_domain
+    return '' if invalid_url?
+    host = Addressable::URI.parse(url).host.split('.')
+    return "#{host[-2]}.#{host[-1]}"
+  rescue Exception
+    return ''
   end
 
-  def self.invalid_url?(url_string)
-    return true if url_string.empty?
-    return true if url_string.starts_with?('/') or url_string.starts_with?('#')
-    return true unless url_string =~ URI::regexp
-    return true if url_string.starts_with?('mailto:')
-    return true if url_string.starts_with?('javascript:')
+  def invalid_url?
+    return true if url.empty?
+    return true if url.starts_with?('/') or url.starts_with?('#')
+    return true unless url=~ URI::regexp
+    return true if url.starts_with?('mailto:')
+    return true if url.starts_with?('javascript:')
   end
 
 end

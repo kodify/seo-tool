@@ -18,6 +18,7 @@ describe Crawler do
              visited_at: nil,
              save: true,
              domain: domain,
+             original_subdomain: 'www.google.com',
              'internal_links=' => nil,
              'external_links=' => nil,
              'visited_at=' => nil,

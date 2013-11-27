@@ -2,99 +2,33 @@ require 'spec_helper'
 
 describe Domains do
   describe '#process' do
-    let!(:links_amount) { 19 }
-    let!(:links) do
-      links = []
-      links_amount.times do |round|
-        link = Link.new
-        link.url = urls.first
-        link.affiliate = 'yes'
-        link.save
-        links << link
-      end
-      links
+    let!(:url) do
+      url = Url.new
+      url.url = 'http://www.supu.com/tamadre/?id=2'
+      url.ip = '80.80.80.80'
+      url.save
+      url
     end
-
-    let!(:url_amount) { 1 }
-    let!(:urls) do
-      urls = []
-      url_amount.times do |round|
-        url = Url.new
-        url.url = "http://www.round#{round}.com"
-        url.domain = domain
-        url.save
-        urls << url
-      end
-      urls
-    end
-
-    let!(:domain) do
-      d = Domain.new
-      d.url = 'name.com'
-      d.status = status
-      d.save
-      d
-    end
-
-    let!(:affiliate_status) do
-      s = Status.new
-      s.name = 'affiliate'
-      s.save
-      s
-    end
+    let!(:domains_count) { Domain.all.count }
+    let!(:subnets_count) { Subnet.all.count }
 
     before do
-      DomainStatus.new.process_domain domain
+      subject.save_url_domain url
     end
 
-    describe 'given a valid domain with nil status' do
-      let!(:status) { nil }
-      describe 'and more than 5 affiliate links' do
-        let!(:url_amount) { 1 }
-        let!(:links_amount) { 19 }
-
-        it 'should be saved as affiliate' do
-          Domain.find(domain.id).status.should.eql? affiliate_status
-        end
+    describe 'given a valid url without asigned domain' do
+      it 'should create a new domain' do
+        Domain.all.count.should_not be domains_count
       end
-      describe 'and less than 5 affiliate links' do
-        let!(:url_amount)   { 1 }
-        let!(:links_amount) { 2 }
-        it 'should not be saved as affiliate' do
-          Domain.find(domain.id).status.should.nil?
-        end
+      it 'should relate url with new domain' do
+        url.domain_id.should_not be nil
+      end
+      it 'should create a new subnet' do
+        Subnet.all.count.should_not be subnets_count
+      end
+      it 'should create a valid subnet' do
+        url.domain.subnet.ip.should.eql? '80.80.80'
       end
     end
-
-    describe 'given a valid domain with affiliate status' do
-      let!(:status) { affiliate_status }
-      describe 'and more than 5 affiliate links' do
-        let!(:url_amount) { 1 }
-        let!(:links_amount) { 19 }
-
-        it 'should be saved as affiliate' do
-          Domain.find(domain.id).status.should.eql? affiliate_status
-        end
-      end
-    end
-
-    describe 'given a valid domain with other status' do
-      let!(:status) do
-        s = Status.new
-        s.name = 'other'
-        s.save
-        s
-      end
-
-      describe 'and more than 5 affiliate links' do
-        let!(:url_amount) { 1 }
-        let!(:links_amount) { 19 }
-
-        it 'should be saved as status' do
-          Domain.find(domain.id).status.should.eql? status
-        end
-      end
-    end
-
   end
 end

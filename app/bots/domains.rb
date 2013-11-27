@@ -1,7 +1,9 @@
 class Domains
+
   def process(amount)
     batch_size = [amount.to_i, Url.count].min
     Url.where(:domain_id => nil).limit(batch_size).each do |url|
+      say "Fetching domain for #{url.url}"
       save_url_domain(url)
     end
   end
@@ -9,24 +11,30 @@ class Domains
   def save_url_domain(url)
     return if url.nil?
     return unless url.domain.nil?
-    original_domain = Url.original_domain(url.url)
-    return if original_domain == ''
-    say "Fetching domain for #{url.url}"
-    existing_domain = Domain.where(:url => original_domain).first
-    existing_domain ||= Domain.new :url=> original_domain
-    existing_domain.subnet = subnet_for url
-    existing_domain.save
-    url.domain = existing_domain
+    return if url.original_domain == ''
+
+    url.domain = domain_for url
     url.save
     url
   end
 
+  # Get the related domain for a url
+  def domain_for(url)
+    domain = Domain.where(:url => url.original_domain).first
+    domain ||= Domain.new :url=> url.original_domain
+    domain.subnet = subnet_for url
+    domain.save
+    domain
+  end
+
+  # Output a message
   def say(message)
     if ENV['RAILS_ENV'] != 'production'
       puts message
     end
   end
 
+  # Get / create a subnet for a given url
   def subnet_for(url)
     return unless url.ip
     ip = url.ip.split('.')[0..2].join('.')
