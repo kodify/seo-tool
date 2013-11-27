@@ -20,7 +20,6 @@ class DomainStatus
   # Processes a domain
   def process_domain(domain)
     if domain.status.nil? && domain.affiliate?
-      puts "Updated domain #{domain.url}"
       domain.status = Status.where(name: 'affiliate').first
       domain.save
     end

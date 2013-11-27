@@ -50,6 +50,7 @@ describe Crawler do
       subject.stub(:existing_link).and_return(nil)
       subject.stub(:new_link).and_return(db_link)
       subject.stub(:new_stat).and_return(stat)
+      subject.stub(:verify_url).and_return(url)
 
       subject.process_links(url)
     end
@@ -72,6 +73,9 @@ describe Crawler do
       end
       it 'should save statistics on url' do
         stat.should have_received(:save)
+      end
+      it 'should save the domain before starting anything' do
+        subject.should have_received(:verify_url).with url
       end
     end
 

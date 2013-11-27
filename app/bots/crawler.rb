@@ -5,6 +5,7 @@ class Crawler
   include ActionView::Helpers::SanitizeHelper
 
   def process_links(url)
+    url = verify_url url
     set_url_links_as_not_found url
     page = get_html url
     return unless page
@@ -166,4 +167,7 @@ class Crawler
     url.domain.save
   end
 
+  def verify_url(url)
+    Domains.new.save_url_domain url
+  end
 end
