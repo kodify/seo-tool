@@ -18,4 +18,10 @@ namespace :crawl do
     limit = 50 if ENV['CRAWL_LIMIT'].nil?
     Domains.new.process(limit)
   end
+
+  desc 'domain_status'
+  task :domain_status => :environment do
+    DomainStatus.new.process
+  end
+
 end

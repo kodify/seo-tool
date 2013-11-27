@@ -9,4 +9,23 @@ class Domain < ActiveRecord::Base
   def to_s
     url
   end
+
+  def affiliate?
+    if status.nil?
+      if affiliates_count > 5
+        true
+      else
+        false
+      end
+    elsif status.affiliate?
+      true
+    else
+      false
+    end
+  end
+
+  def affiliates_count
+    Url.joins(:links).where('links.affiliate' => 'yes', domain: self).count
+  end
+
 end
