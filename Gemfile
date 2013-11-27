@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 1.2'
 
 # Mysql
 gem 'mysql2'
+gem 'pg'
 
 # Bootstrap
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'

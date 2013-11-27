@@ -107,6 +107,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (~> 0.5)
       rack (~> 1.2)
+    pg (0.17.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -195,6 +196,7 @@ DEPENDENCIES
   mysql2
   nokogiri
   oauth2
+  pg
   rails (= 4.0.0)
   rails_12factor
   rspec
