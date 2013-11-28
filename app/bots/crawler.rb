@@ -93,7 +93,6 @@ class Crawler
       end
     end
     update_url url, metrics
-    save_url_stats site, url, metrics
   end
 
   def is_internal_link(url, domain)
@@ -114,19 +113,6 @@ class Crawler
     url.external_links = metrics[:external_links]
     url.visited_at = Time.now
     url.save
-  end
-
-  def save_url_stats(site, url, metrics)
-    stat = new_stat
-    stat.site = site
-    stat.url = url
-    stat.internal_links = metrics[:internal_links]
-    stat.external_links = metrics[:external_links]
-    stat.save
-  end
-
-  def new_stat
-    Stat.new
   end
 
   ##

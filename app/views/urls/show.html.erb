@@ -12,12 +12,7 @@
 
 
 <div class="row">
-  <% if @url.internal_links > 0 || @url.external_links > 0 %>
-  <div class="col-md-4">
-    <div id="donutchart" style="width: 100%; height: 300px;"></div>
-  </div>
-  <% end %>
-  <div class="col-md-4">
+  <div class="col-md-8">
     <table class='table table-hover'>
       <tbody>
           <tr>
@@ -65,10 +60,10 @@
       </tbody>
     </table>
   </div>
-  <% if @url.stats.length > 0 %>
-  <div class="col-md-4">
-    <div id="chart_stats" style="width: 100%; height: 300px;"></div>
-  </div>
+  <% if @url.internal_links > 0 || @url.external_links > 0 %>
+      <div class="col-md-4">
+        <div id="donutchart" style="width: 100%; height: 300px;"></div>
+      </div>
   <% end %>
 </div>
 
@@ -110,40 +105,5 @@
     <% end %>
 <% end %>
 
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Link Type', 'number'],
-            ['Internal links', <%= @url.internal_links %>],
-            ['External links', <%= @url.external_links %>]
-        ]);
-
-        var options = {
-            title: 'Internal vs External links',
-            pieHole: 0.4,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-
-        var data_stats = google.visualization.arrayToDataTable([
-            ['Created', 'Internal', 'External', 'Total'],
-            <% @url.stats.each do |stat| %>
-            ['<%= stat.created_at %>', <%= stat.internal_links %>, <%= stat.external_links %>, <%= stat.external_links.to_i + stat.internal_links.to_i %>],
-            <% end %>
-        ]);
-
-        var options_stats = {
-            title: 'Url Statistics'
-        };
-
-        var chart_stats = new google.visualization.LineChart(document.getElementById('chart_stats'));
-        chart_stats.draw(data_stats, options_stats);
-    }
-</script>
 
 
