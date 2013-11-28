@@ -13,7 +13,7 @@ class DomainsController < ApplicationController
   # GET /domains/1.json
   def show
     @next_domain = nil
-    if session[:all_domains]
+    if session[:all_domains] && session[:all_domains].index(params[:id].to_i)
       next_index = session[:all_domains].index(params[:id].to_i).next
       @next_domain = session[:all_domains][next_index]
     end
