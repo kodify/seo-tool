@@ -34,7 +34,8 @@ describe Crawler do
              status: status,
              links_counter: 10,
              'links_counter='=> 10,
-             save: true)
+             save: true,
+             subnet: nil)
     end
     let!(:status) { double('status', name: 'noOK') }
     let!(:db_link) do

@@ -167,9 +167,19 @@ class Crawler
   def save_domain_counters(url)
     url.domain.links_counter = url.domain.links_counter + url.links.where(status: 'link found').count
     url.domain.save
+    save_subnet_links(url.domain.subnet) if url.domain.subnet
   end
 
   def verify_url(url)
     Domains.new.save_url_domain url
+  end
+
+  def save_subnet_links(subnet)
+    count = 0
+    subnet.domains.each do |domain|
+      count = count + domain.links_counter
+    end
+    subnet.links_count = count
+    subnet.save
   end
 end

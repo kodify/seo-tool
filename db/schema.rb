@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126172304) do
+ActiveRecord::Schema.define(version: 20131128113709) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "domains", force: true do |t|
     t.datetime "created_at"
@@ -87,19 +90,21 @@ ActiveRecord::Schema.define(version: 20131126172304) do
     t.datetime "updated_at"
   end
 
+  add_index "subnets", ["links_count"], name: "index_subnets_on_links_count", using: :btree
+
   create_table "urls", force: true do |t|
-    t.string    "url"
-    t.timestamp "created_at",                   null: false
-    t.datetime  "updated_at"
-    t.integer   "internal_links",   default: 0
-    t.integer   "external_links",   default: 0
-    t.datetime  "visited_at"
-    t.string    "ip"
-    t.string    "subdomain"
-    t.string    "domain_authority"
-    t.string    "page_authority"
-    t.string    "source"
-    t.integer   "domain_id"
+    t.string   "url"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at"
+    t.integer  "internal_links",   default: 0
+    t.integer  "external_links",   default: 0
+    t.datetime "visited_at"
+    t.string   "ip"
+    t.string   "subdomain"
+    t.string   "domain_authority"
+    t.string   "page_authority"
+    t.string   "source"
+    t.integer  "domain_id"
   end
 
   add_index "urls", ["domain_id"], name: "index_urls_on_domain_id", using: :btree
