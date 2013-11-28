@@ -1,13 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  site_id: 
-  url_id: 
-  internal_links: MyString
-  external_links: MyString
+  status: one
+  day: 2013-01-01
+  number: 100
 
 two:
-  site_id: 
-  url_id: 
-  internal_links: MyString
-  external_links: MyString
+  status: two
+  day: 2013-01-01
+  number: 200
