@@ -24,4 +24,9 @@ namespace :crawl do
     DomainStatus.new.process
   end
 
+  desc 'site stats'
+  task :stats => :environment do
+    Stats.new.process
+  end
+
 end

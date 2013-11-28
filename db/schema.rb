@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131128113709) do
+ActiveRecord::Schema.define(version: 20131128151435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,16 +64,14 @@ ActiveRecord::Schema.define(version: 20131128113709) do
   end
 
   create_table "stats", force: true do |t|
-    t.integer  "site_id"
-    t.integer  "url_id"
-    t.string   "internal_links"
-    t.string   "external_links"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status_id"
+    t.string   "day"
+    t.integer  "number",     default: 0
   end
 
-  add_index "stats", ["site_id"], name: "index_stats_on_site_id", using: :btree
-  add_index "stats", ["url_id"], name: "index_stats_on_url_id", using: :btree
+  add_index "stats", ["status_id"], name: "index_stats_on_status_id", using: :btree
 
   create_table "statuses", force: true do |t|
     t.string   "name"
