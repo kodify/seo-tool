@@ -160,11 +160,14 @@ class Crawler
   # Updates all url related links to status link not found
   #
   def set_url_links_as_not_found(url)
-    url.domain.links_counter = url.domain.links_counter - url.links.where(status: 'link found').count
+    if url.domain
+      url.domain.links_counter = url.domain.links_counter - url.links.where(status: 'link found').count
+    end
     url.links.update_all(status: 'link not found')
   end
 
   def save_domain_counters(url)
+    return if url.domain.nil?
     url.domain.links_counter = url.domain.links_counter + url.links.where(status: 'link found').count
     url.domain.save
     save_subnet_links(url.domain.subnet) if url.domain.subnet
