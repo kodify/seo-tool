@@ -3,12 +3,14 @@ require 'spec_helper'
 describe DomainStatus do
   describe '#process' do
     let!(:links_amount) { 19 }
+    let!(:link_status) { 'found' }
     let!(:links) do
       links = []
       links_amount.times do |round|
         link = Link.new
         link.url = urls.first
         link.affiliate = 'yes'
+        link.status = link_status
         link.save
         links << link
       end
@@ -96,5 +98,25 @@ describe DomainStatus do
       end
     end
 
+    describe 'given a valid domain with remove status' do
+      let!(:status) do
+        s = Status.new
+        s.name = 'remove'
+        s.save
+        s
+      end
+      describe 'and all links are on status not found' do
+        let!(:link_status) { 'link not found' }
+        it 'should be saved as delete' do
+          Domain.find(domain.id).status.name.should.eql? 'delete'
+        end
+      end
+      describe 'and not all links are on status not found' do
+        let!(:link_status) { 'found' }
+        it 'should still remove status' do
+          Domain.find(domain.id).status.should.eql? status
+        end
+      end
+    end
   end
 end
