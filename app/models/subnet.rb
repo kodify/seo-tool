@@ -7,10 +7,6 @@ class Subnet < ActiveRecord::Base
   end
 
   def urls_count
-    count = 0
-    self.domains.each do |domain|
-      count = count + domain.urls.count
-    end
-    count
+    self.domains.sum { |domain|  domain.urls.count }
   end
 end
