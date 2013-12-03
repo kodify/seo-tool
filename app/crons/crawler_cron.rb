@@ -4,7 +4,7 @@ class CrawlerCron
 
   def process(amount)
     batch_size(amount).times do
-      url = Url.order('visited_at ASC').first
+      url = Url.order('visited_at NULLS FIRST').first
       treat_existing_url(url)
     end
   end
@@ -22,7 +22,7 @@ class CrawlerCron
   end
 
   def batch_size(amount)
-    min = [amount.to_i, Url.count].min
+    [amount.to_i, Url.count].min
   end
 
   def say_unable_to_treat_url(url)
