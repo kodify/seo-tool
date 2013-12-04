@@ -4,7 +4,7 @@
         <%= form_tag domains_path, method: 'get', class: 'form-inline' do %>
             <div class="form-group"><%= text_field_tag :search, params[:search], class: 'form-control' %></div>
             <div class="form-group">
-              <%= select_tag('status_id', content_tag(:option, 'Select one...', :value => "") + content_tag(:option, 'Empty', :value => "--empty--") + options_from_collection_for_select(@statuses, 'id', 'name', params[:status_id].to_i), { :class => 'form-control' }) %>
+              <%= select_tag('status_id', content_tag(:option, 'Select one...', :value => "") + options_from_collection_for_select(@statuses, 'id', 'name', params[:status_id].to_i), { :class => 'form-control' }) %>
             </div>
             <div class="form-group"><%= submit_tag "Search", :name => nil, class: 'btn' %></div>
         <% end %>
