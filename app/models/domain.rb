@@ -3,8 +3,14 @@ class Domain < ActiveRecord::Base
   belongs_to :subnet
   has_many :urls
 
+  after_initialize :init
+
   default_scope { order(links_counter: :desc) }
   paginates_per 50
+
+  def init
+    self.status ||= build_status
+  end
 
   def to_s
     url
@@ -34,6 +40,10 @@ class Domain < ActiveRecord::Base
 
   def minimum_affiliate_count
     5
+  end
+
+  def build_status
+    Status.where(name: 'Empty').first
   end
 
 end
