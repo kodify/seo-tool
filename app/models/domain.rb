@@ -9,7 +9,7 @@ class Domain < ActiveRecord::Base
   paginates_per 50
 
   def init
-    self.status ||= build_status
+    self.status ||= Status.where(name: 'Empty').first
   end
 
   def to_s
@@ -40,10 +40,6 @@ class Domain < ActiveRecord::Base
 
   def minimum_affiliate_count
     5
-  end
-
-  def build_status
-    Status.where(name: 'Empty').first
   end
 
 end
