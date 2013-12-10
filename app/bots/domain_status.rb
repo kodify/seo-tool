@@ -8,13 +8,22 @@ class DomainStatus
   end
 
   # Get a batch of domains for a given amount, or all of them
-  def batch(amount = nil, filters = { status_id: [nil, 'remove'] } )
+  def batch(amount = nil, filters = nil )
+    filters |=  { status: default_statuses }
     batch_size = [amount.to_i, Domain.count].min
     if amount.nil?
       Domain.where(filters)
     else
       Domain.where(filters).limit(batch_size)
     end
+  end
+
+  def default_statuses
+    statuses = []
+    Status.where(name: [ 'Empty', 'remove' ]).each do |status|
+      statuses << status.id
+    end
+    statuses
   end
 
   # Processes a domain
