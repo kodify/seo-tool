@@ -17,7 +17,7 @@ class Domain < ActiveRecord::Base
   end
 
   def affiliate?
-    if status.nil?
+    if status.nil? || status.empty?
       if affiliates_count > minimum_affiliate_count
         true
       else

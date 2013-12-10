@@ -28,17 +28,13 @@ class DomainStatus
 
   # Processes a domain
   def process_domain(domain)
-    if affiliate?(domain)
+    if domain.affiliate?
       domain.status = Status.where(name: 'affiliate').first
       domain.save
     elsif delete?(domain)
       domain.status = Status.where(name: 'remove').first
       domain.save
     end
-  end
-
-  def affiliate?(domain)
-    domain.status.nil? && domain.affiliate?
   end
 
   def delete?(domain)
