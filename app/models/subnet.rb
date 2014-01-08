@@ -1,5 +1,5 @@
 class Subnet < ActiveRecord::Base
-  default_scope { order(links_count: :desc) }
+  default_scope { order(domains_count: :desc) }
   has_many :domains
 
   def to_s
@@ -20,5 +20,9 @@ class Subnet < ActiveRecord::Base
       count = count + domain.urls.count
     end
     count
+  end
+
+  def domains_count
+    self.domains.count
   end
 end
