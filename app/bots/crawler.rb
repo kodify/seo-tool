@@ -169,6 +169,7 @@ class Crawler
       count = count + domain.links_counter
     end
     subnet.links_count = count
+    subnet.domains_count = subnet.domains.count
     subnet.save
   end
 end
