@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131204082535) do
+ActiveRecord::Schema.define(version: 20140109170924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,12 +82,14 @@ ActiveRecord::Schema.define(version: 20131204082535) do
 
   create_table "subnets", force: true do |t|
     t.string   "ip"
-    t.integer  "urls_count",  default: 0
-    t.integer  "links_count", default: 0
+    t.integer  "urls_count",    default: 0
+    t.integer  "links_count",   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "domains_count"
   end
 
+  add_index "subnets", ["domains_count"], name: "index_subnets_on_domains_count", using: :btree
   add_index "subnets", ["links_count"], name: "index_subnets_on_links_count", using: :btree
 
   create_table "urls", force: true do |t|

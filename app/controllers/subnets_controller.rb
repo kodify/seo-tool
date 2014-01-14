@@ -4,7 +4,7 @@ class SubnetsController < ApplicationController
   # GET /subnets
   # GET /subnets.json
   def index
-    @subnets = Subnet.all.page params[:page]
+    @subnets = Subnet.all.domains.page params[:page]
   end
 
   # GET /subnets/1

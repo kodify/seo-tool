@@ -21,7 +21,7 @@
     <% @subnets.each do |subnet| %>
       <tr>
         <td><%= subnet.ip %></td>
-        <td class='text-right'><%= subnet.domains.count %></td>
+        <td class='text-right'><%= subnet.domains_count %></td>
         <td class='text-right'><%= subnet.links_count %></td>
         <td class='text-right'><%= link_to ' ', subnet, class: 'btn btn-default btn-sm glyphicon glyphicon-eye-open' %></td>
       </tr>
