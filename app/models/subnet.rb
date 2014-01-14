@@ -1,5 +1,5 @@
 class Subnet < ActiveRecord::Base
-  default_scope { order(domains_count: :desc) }
+  default_scope lambda { order(domains_count: :desc) }
   has_many :domains
 
   def to_s
