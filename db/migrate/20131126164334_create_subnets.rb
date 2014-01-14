@@ -45,7 +45,7 @@ class CreateSubnets < ActiveRecord::Migration
   end
 
   def counters
-    Subnet.all.each do |subnet|
+    Subnet.unscoped.all.each do |subnet|
       subnet.domains.each do |domain|
         subnet.links_count = subnet.links_count + domain.links_counter
         subnet.urls_count = subnet.urls_count + domain.urls.count
