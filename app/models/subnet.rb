@@ -1,6 +1,6 @@
 class Subnet < ActiveRecord::Base
   default_scope { order(links_count: :desc) }
-  scope :domains, lambda { order(domains_count: :desc) }
+  scope :domains, lambda { order('domains_count DESC NULLS LAST') }
 
   has_many :domains
 
