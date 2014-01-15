@@ -25,7 +25,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 # Mysql
-gem 'mysql2'
+# gem 'mysql2'
 gem 'pg'
 
 # Bootstrap
