@@ -15,6 +15,7 @@
   <thead>
   <tr>
     <th>Domains</th>
+    <th width=150>Status</th>
     <th width=150>Urls</th>
     <th width=150>Links</th>
     <th></th>
@@ -26,6 +27,7 @@
   <% @domains.each do |domain| %>
       <tr>
         <td><%= link_to domain.url, domain.url %></td>
+        <td class='<%= domain.status.style.gsub('btn-', '') if domain.status %>'><%= domain.status %></td>
         <td><%= domain.urls.count %></td>
         <td><%= domain.links_counter %></td>
         <td width=30><%= link_to ' ', domain, class: 'btn btn-default btn-sm glyphicon glyphicon-eye-open' %></td>
