@@ -10,7 +10,8 @@ class Domains
 
   def save_url_domain(url)
     return if url.nil?
-    return unless url.domain.nil?
+    # TODO This is temporary removed, please uncomment
+    # return unless url.domain.nil?
     return if url.original_domain == ''
 
     url.domain = domain_for url

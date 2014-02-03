@@ -21,8 +21,7 @@ class Url < ActiveRecord::Base
 
   def original_domain
     return '' if invalid_url?
-    host = Addressable::URI.parse(url).host.split('.')
-    return "#{host[-2]}.#{host[-1]}"
+    Addressable::URI.heuristic_parse(url, scheme: 'http').host[/\w+\.\w+(\.\w{2})?\Z/]
   rescue Exception
     return ''
   end
