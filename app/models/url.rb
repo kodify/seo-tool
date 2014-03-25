@@ -24,7 +24,6 @@ class Url < ActiveRecord::Base
     return '' if invalid_url?
     uri = Domainatrix.parse(url)
     "#{uri.domain}.#{uri.public_suffix}"
-    # Addressable::URI.heuristic_parse(url, scheme: 'http').host[/\w+\.\w+(\.\w{2})?\Z/]
   rescue Exception
     return ''
   end
