@@ -22,6 +22,12 @@ describe Url do
           subject.original_domain.should eq 'supu.com.es'
         end
       end
+      describe 'dash separated domains' do
+        let!(:url) { 'http://www.hello-world.com/abcde' }
+        it 'should return the domain hello-world.com' do
+          subject.original_domain.should eq 'hello-world.com'
+        end
+      end
     end
 
     describe 'for sub-domains' do
