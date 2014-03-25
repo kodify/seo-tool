@@ -38,6 +38,7 @@ gem 'kaminari'
 gem 'nokogiri'
 
 gem 'addressable'
+gem 'domainatrix'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

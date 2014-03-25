@@ -1,4 +1,5 @@
 require 'addressable/uri'
+require 'domainatrix'
 
 class Url < ActiveRecord::Base
   belongs_to :domain
@@ -21,7 +22,9 @@ class Url < ActiveRecord::Base
 
   def original_domain
     return '' if invalid_url?
-    Addressable::URI.heuristic_parse(url, scheme: 'http').host[/\w+\.\w+(\.\w{2})?\Z/]
+    uri = Domainatrix.parse(url)
+    "#{uri.domain}.#{uri.public_suffix}"
+    # Addressable::URI.heuristic_parse(url, scheme: 'http').host[/\w+\.\w+(\.\w{2})?\Z/]
   rescue Exception
     return ''
   end
